@@ -20,7 +20,35 @@ class ProjectManagementController extends AbstractController
     public function getTasksData(Request $request): Response
     {
         $data = [
-            'message' => 'Data fetched successfully',
+
+            [
+                'label' => 'Task 1',
+                'status' => 'DONE',
+                'assignee' => 'John Doe',
+                'due_date' => '2024-05-07',
+                'creator' => 'Jane Doe'
+            ],
+            [
+                'label' => 'Task 2',
+                'status' => 'BLOCKED',
+                'assignee' => 'Alice Smith',
+                'due_date' => '2024-05-10',
+                'creator' => 'Bob Smith'
+            ],
+            [
+                'label' => 'Task 3',
+                'status' => 'DONE',
+                'assignee' => 'Alice Smith',
+                'due_date' => '2024-05-10',
+                'creator' => 'Bob Smith'
+            ],
+            [
+                'label' => 'Task 2',
+                'status' => 'REVIEW',
+                'assignee' => 'Alice Smith',
+                'due_date' => '2024-05-10',
+                'creator' => 'Bob Smith'
+            ],
         ];
 
         return $this->json($data);

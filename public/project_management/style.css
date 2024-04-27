@@ -39,14 +39,30 @@ body {
 
 .task-done {
     background-color: var(--task-done);
+    color: var(--main-background-color);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.75rem;
+    width: 0;
+
 }
 
 .task-blocked {
     background-color: var(--task-blocked);
+    color: var(--main-background-color);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.75rem;
+    width: 0;
 }
 
 .task-review {
     background-color: var(--task-review);
+    color: var(--main-background-color);
+    border-radius: 5px;
+    text-align: center;
+    width: 0;
+    font-size: 0.75rem;
 }
 
 .project-management-nav {
@@ -78,4 +94,36 @@ body {
     height: 4px;
     background-color: var(--accent-background-color);
 
+}
+
+.task-table th {
+    font-weight: 500;
+    color: var(--secondary-text-color);
+}
+
+.task-table {
+    width: 100%;
+}
+
+.task-table,
+th,
+td {
+    border-collapse: collapse;
+}
+
+/* .task-table tbody tr {
+    color: var(--main-text-color);
+    border-bottom: 1px solid #B7B7B7;
+    text-align: center;
+} */
+
+td {
+    border-bottom: 1px solid #b7b7b7;
+    text-align: center;
+    color: var(--main-text-color);
+}
+
+th,
+td {
+    padding: 1rem;
 }
