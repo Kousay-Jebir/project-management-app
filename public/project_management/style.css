@@ -72,6 +72,7 @@ body {
     justify-content: center;
     padding: 1.75rem 0rem;
     gap: 9rem;
+    margin-block: 1rem;
 
 }
 
@@ -126,4 +127,32 @@ td {
 th,
 td {
     padding: 1rem;
+}
+
+.task-management {
+    background-color: var(--secondary-background-color);
+    padding: 2rem;
+}
+
+.task-management input[type="search"] {
+    border-radius: 1rem;
+    padding: 0.3rem 3rem;
+    border: none;
+}
+
+#add-task {
+    background-color: var(--accent-background-color);
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 0.7rem;
+    color: var(--main-background-color);
+}
+
+#filter {
+    background-color: var(--main-background-color);
+    border: none;
+    background-color: var(--main-background-color);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    color: var(--main-text-color);
 }

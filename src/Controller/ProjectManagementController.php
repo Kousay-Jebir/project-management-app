@@ -16,8 +16,8 @@ class ProjectManagementController extends AbstractController
             'controller_name' => 'ProjectManagementController',
         ]);
     }
-    #[Route('/project/management/tasks', name: 'project_management_tasks', methods: ['GET'], )]
-    public function getTasksData(Request $request): Response
+    #[Route('/project/management/alltasks', name: 'project_management_all_tasks', methods: ['GET'], )]
+    public function getAllTasksData(Request $request): Response
     {
         $data = [
 
@@ -49,6 +49,30 @@ class ProjectManagementController extends AbstractController
                 'due_date' => '2024-05-10',
                 'creator' => 'Bob Smith'
             ],
+        ];
+
+        return $this->json($data);
+    }
+    #[Route('/project/management/assignedtasks', name: 'project_management_assigned_tasks', methods: ['GET'], )]
+    public function getAssignedTasksData(Request $request): Response
+    {
+        $data = [
+
+            [
+                'label' => 'Task 1',
+                'status' => 'DONE',
+                'assignee' => 'Kousay Jebir',
+                'due_date' => '2024-05-07',
+                'creator' => 'Jane Doe'
+            ],
+            [
+                'label' => 'Task 2',
+                'status' => 'BLOCKED',
+                'assignee' => 'Kousay Jebir',
+                'due_date' => '2024-05-10',
+                'creator' => 'Bob Smith'
+            ],
+
         ];
 
         return $this->json($data);

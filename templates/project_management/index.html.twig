@@ -17,10 +17,15 @@
     </ul>
 
     <section class="project-management-dashboard">
-        <form action="" method="get" class="task-management">
-            <button type="button">filter</button>
+        <form action="" method="get" class="task-management br-15">
+            <button id="filter" type="button">filter</button>
             <input type="search" name="" id="">
+            <button type="submit">Search</button>
+            <button id="add-task" type="button">Add a new task</button>
         </form>
+
+        <div class="chart-container" style="width: 800px;">
+        </div>
 
         <table class="task-table">
 
@@ -39,7 +44,7 @@
         </table>
 
     </section>
-    <script src="{{asset('project_management/script.js')}}"></script>
+    <script type="module" src="{{asset('project_management/script.js')}}"></script>
 </body>
 
 </html>
