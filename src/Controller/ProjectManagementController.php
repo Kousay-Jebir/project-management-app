@@ -1,80 +1,51 @@
 <?php
-
 namespace App\Controller;
 
+use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ProjectManagementController extends AbstractController
 {
-    #[Route('/project/management', name: 'app_project_management')]
-    public function index(): Response
+    #[Route('/project/management/alltasks', name: 'project_management_all_tasks', methods: ['GET'])]
+    public function getAllTasksData(TaskRepository $taskRepository, Request $request): Response
     {
-        return $this->render('project_management/index.html.twig', [
-            'controller_name' => 'ProjectManagementController',
-        ]);
+        $projectId = 1;
+        $tasks = $taskRepository->findBy(['project' => $projectId]);
+        $formattedTasks = $this->formatTasks($tasks);
+
+        return $this->json($formattedTasks);
     }
-    #[Route('/project/management/alltasks', name: 'project_management_all_tasks', methods: ['GET'], )]
-    public function getAllTasksData(Request $request): Response
+
+    #[Route('/project/management/assignedtasks', name: 'project_management_assigned_tasks', methods: ['GET'])]
+    public function getAssignedTasksData(TaskRepository $taskRepository, Request $request): Response
     {
-        $data = [
+        $userId = $this->getUser()->getId();
+        $projectId = 1;
 
-            [
-                'label' => 'Task 1',
-                'status' => 'DONE',
-                'assignee' => 'John Doe',
-                'due_date' => '2024-05-07',
-                'creator' => 'Jane Doe'
-            ],
-            [
-                'label' => 'Task 2',
-                'status' => 'BLOCKED',
-                'assignee' => 'Alice Smith',
-                'due_date' => '2024-05-10',
-                'creator' => 'Bob Smith'
-            ],
-            [
-                'label' => 'Task 3',
-                'status' => 'DONE',
-                'assignee' => 'Alice Smith',
-                'due_date' => '2024-05-10',
-                'creator' => 'Bob Smith'
-            ],
-            [
-                'label' => 'Task 2',
-                'status' => 'REVIEW',
-                'assignee' => 'Alice Smith',
-                'due_date' => '2024-05-10',
-                'creator' => 'Bob Smith'
-            ],
-        ];
+        $tasks = $taskRepository->findBy(['project' => $projectId, 'assignedUser' => $userId]);
+        $formattedTasks = $this->formatTasks($tasks);
 
-        return $this->json($data);
+        return $this->json($formattedTasks);
     }
-    #[Route('/project/management/assignedtasks', name: 'project_management_assigned_tasks', methods: ['GET'], )]
-    public function getAssignedTasksData(Request $request): Response
+
+    private function formatTasks($tasks): array
     {
-        $data = [
+        $formattedTasks = [];
 
-            [
-                'label' => 'Task 1',
-                'status' => 'DONE',
-                'assignee' => 'Kousay Jebir',
-                'due_date' => '2024-05-07',
-                'creator' => 'Jane Doe'
-            ],
-            [
-                'label' => 'Task 2',
-                'status' => 'BLOCKED',
-                'assignee' => 'Kousay Jebir',
-                'due_date' => '2024-05-10',
-                'creator' => 'Bob Smith'
-            ],
+        foreach ($tasks as $task) {
+            $formattedTasks[] = [
+                'label' => $task->getTaskName(),
+                'description' => $task->getTaskDescription(),
+                'status' => $task->getTaskStatus(),
+                'assignee' => $task->getAssignedUser()->getUserName(),
+                'due_date' => '14/05/24', // You may need to adjust this
+                'creator' => $task->getTaskCreator()->getUserName()
+            ];
+        }
 
-        ];
-
-        return $this->json($data);
+        return $formattedTasks;
     }
 }

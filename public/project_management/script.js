@@ -49,7 +49,7 @@ function fetchTasks(action) {
 
 function updateTasksTableUi(tasks) {
     const tableBody = document.querySelector('.task-table tbody');
-
+    console.log(tasks);
     // Clear existing table rows
     tableBody.innerHTML = '';
 
@@ -58,7 +58,7 @@ function updateTasksTableUi(tasks) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${taskData.label}</td>
-            <td class="task-${taskData.status.toLowerCase()}">${taskData.status}</td>
+            <td class="task-${taskData.status}">${taskData.status}</td>
             <td>${taskData.assignee}</td>
             <td>${taskData.due_date}</td>
             <td>${taskData.creator}</td>
