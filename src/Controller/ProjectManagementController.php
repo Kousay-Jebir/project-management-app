@@ -9,6 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProjectManagementController extends AbstractController
 {
+    #[Route('/project/management', name: 'app_project_management')]
+    public function index(): Response
+    {
+        return $this->render('project_management/index.html.twig', [
+            'controller_name' => 'ProjectManagementController',
+        ]);
+    }
+
     #[Route('/project/management/alltasks', name: 'project_management_all_tasks', methods: ['GET'])]
     public function getAllTasksData(TaskRepository $taskRepository, Request $request): Response
     {

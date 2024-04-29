@@ -1,7 +1,12 @@
 
 const projectManagementNav = document.querySelector(".project-management-nav");
 const navItems = document.querySelectorAll(".project-management-nav-item a");
-
+const taskNumberToText = new Map([
+    [0, 'blocked'],
+    [1, 'progress'],
+    [2, 'review'],
+    [3, 'done']
+]);
 projectManagementNav.addEventListener("click", (event) => {
     event.preventDefault();
     if (event.target.tagName == "A") {
@@ -49,16 +54,17 @@ function fetchTasks(action) {
 
 function updateTasksTableUi(tasks) {
     const tableBody = document.querySelector('.task-table tbody');
-    console.log(tasks);
+    let taskStatus;
     // Clear existing table rows
     tableBody.innerHTML = '';
 
     // Loop through tasks and create table rows
     tasks.forEach(taskData => {
         const row = document.createElement('tr');
+        taskStatus = taskNumberToText.get(taskData.status);
         row.innerHTML = `
             <td>${taskData.label}</td>
-            <td class="task-${taskData.status}">${taskData.status}</td>
+            <td class="task-${taskStatus}">${taskStatus.toUpperCase()}</td>
             <td>${taskData.assignee}</td>
             <td>${taskData.due_date}</td>
             <td>${taskData.creator}</td>

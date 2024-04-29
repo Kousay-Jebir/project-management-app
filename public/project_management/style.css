@@ -12,6 +12,7 @@
     --task-done: #33A069;
     --task-blocked: #DC646A;
     --task-review: #F9BE33;
+    --task-progress: #7F77F1;
 }
 
 li,
@@ -58,6 +59,15 @@ body {
 
 .task-review {
     background-color: var(--task-review);
+    color: var(--main-background-color);
+    border-radius: 5px;
+    text-align: center;
+    width: 0;
+    font-size: 0.75rem;
+}
+
+.task-progress {
+    background-color: var(--task-progress);
     color: var(--main-background-color);
     border-radius: 5px;
     text-align: center;
