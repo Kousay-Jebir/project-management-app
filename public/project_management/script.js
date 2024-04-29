@@ -24,15 +24,14 @@ projectManagementNav.addEventListener("click", (event) => {
 
         else if (event.target.innerHTML == "project overview") {
             // fetchProjectData();
-            initProjectOverview();
-            fetchProjectChart();
+
         }
 
     }
 });
 
 function fetchTasks(action) {
-    url = `/project/management/${action}tasks`;
+    const url = `/project/management/${action}tasks`;
     console.log(url);
     return fetch(url, {
         method: 'GET',
@@ -69,41 +68,3 @@ function updateTasksTableUi(tasks) {
 }
 
 
-function initProjectOverview() {
-    // Create a canvas element
-    const canvasElement = document.createElement('canvas');
-    canvasElement.id = 'acquisitions';
-
-    // Append the canvas element to the div element
-    document.querySelector(".chart-container").appendChild(canvasElement);
-}
-
-function fetchProjectChart() {
-    (async function () {
-        const data = [
-            { year: 2010, count: 10 },
-            { year: 2011, count: 20 },
-            { year: 2012, count: 15 },
-            { year: 2013, count: 25 },
-            { year: 2014, count: 22 },
-            { year: 2015, count: 30 },
-            { year: 2016, count: 28 },
-        ];
-
-        new Chart(
-            document.getElementById('acquisitions'),
-            {
-                type: 'bar',
-                data: {
-                    labels: data.map(row => row.year),
-                    datasets: [
-                        {
-                            label: 'Acquisitions by year',
-                            data: data.map(row => row.count)
-                        }
-                    ]
-                }
-            }
-        );
-    })();
-}
