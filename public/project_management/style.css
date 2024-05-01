@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+    --main-text-color: #353535;
+    --secondary-text-color: #284B63;
+
+    --main-background-color: white;
+    --secondary-background-color: #D9D9D9;
+
+    --accent-background-color: #3C6E71;
+
+    --task-done: #33A069;
+    --task-blocked: #DC646A;
+    --task-review: #F9BE33;
+    --task-progress: #7F77F1;
+}
+
+li,
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--main-text-color);
+}
+
+body {
+    margin: 0;
+    padding: 0 5rem;
+
+    font-family: "inter";
+    box-sizing: content-box;
+}
+
+.br-15 {
+    border-radius: 15px;
+}
+
+.task-done {
+    background-color: var(--task-done);
+    color: var(--main-background-color);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.75rem;
+    width: 0;
+
+}
+
+.task-blocked {
+    background-color: var(--task-blocked);
+    color: var(--main-background-color);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.75rem;
+    width: 0;
+}
+
+.task-review {
+    background-color: var(--task-review);
+    color: var(--main-background-color);
+    border-radius: 5px;
+    text-align: center;
+    width: 0;
+    font-size: 0.75rem;
+}
+
+.task-progress {
+    background-color: var(--task-progress);
+    color: var(--main-background-color);
+    border-radius: 5px;
+    text-align: center;
+    width: 0;
+    font-size: 0.75rem;
+}
+
+.project-management-nav {
+    background-color: var(--secondary-background-color);
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding: 1.75rem 0rem;
+    gap: 9rem;
+    margin-block: 1rem;
+
+}
+
+.project-management-nav {
+    color: var(--main-text-color);
+}
+
+.active {
+    color: var(--accent-background-color);
+    position: relative;
+}
+
+.active::after {
+    content: '';
+    /* Required for pseudo-elements */
+    position: absolute;
+    top: 225%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--accent-background-color);
+
+}
+
+.task-table th {
+    font-weight: 500;
+    color: var(--secondary-text-color);
+}
+
+.task-table {
+    width: 100%;
+}
+
+.task-table,
+th,
+td {
+    border-collapse: collapse;
+}
+
+/* .task-table tbody tr {
+    color: var(--main-text-color);
+    border-bottom: 1px solid #B7B7B7;
+    text-align: center;
+} */
+
+td {
+    border-bottom: 1px solid #b7b7b7;
+    text-align: center;
+    color: var(--main-text-color);
+}
+
+th,
+td {
+    padding: 1rem;
+}
+
+.task-management {
+    background-color: var(--secondary-background-color);
+    padding: 2rem;
+}
+
+.task-management input[type="search"] {
+    border-radius: 1rem;
+    padding: 0.3rem 3rem;
+    border: none;
+}
+
+#add-task {
+    background-color: var(--accent-background-color);
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 0.7rem;
+    color: var(--main-background-color);
+}
+
+#filter {
+    background-color: var(--main-background-color);
+    border: none;
+    background-color: var(--main-background-color);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    color: var(--main-text-color);
+}

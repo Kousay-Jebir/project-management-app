@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project management</title>
+    <link rel="stylesheet" href='{{asset('project_management/style.css')}}'>
+</head>
+
+<body>
+    <ul class="project-management-nav br-15">
+        <li class="project-management-nav-item"><a class="active" href="#">project overview</a></li>
+        <li class="project-management-nav-item"><a href="#">all tasks</a></li>
+        <li class="project-management-nav-item"><a href="#">assigned tasks</a></li>
+        <li class="project-management-nav-item"><a href="#">chat room</a></li>
+    </ul>
+
+    <section class="project-management-dashboard">
+        <form action="" method="get" class="task-management br-15">
+            <button id="filter" type="button">filter</button>
+            <input type="search" name="" id="">
+            <button type="submit">Search</button>
+            <button id="add-task" type="button">Add a new task</button>
+        </form>
+
+        <div class="chart-container" style="width: 800px;">
+        </div>
+
+        <table class="task-table">
+
+            <thead>
+                <tr>
+                    <th>task label</th>
+                    <th>status</th>
+                    <th>assignee</th>
+                    <th>due date</th>
+                    <th>task creator</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </section>
+    <script type="module" src="{{asset('project_management/script.js')}}"></script>
+</body>
+
+</html>
