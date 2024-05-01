@@ -36,6 +36,10 @@ class Team
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'team', orphanRemoval: true)]
     private Collection $projects;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $teamLeader = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -136,6 +140,18 @@ class Team
                 $project->setTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTeamLeader(): ?User
+    {
+        return $this->teamLeader;
+    }
+
+    public function setTeamLeader(?User $teamLeader): static
+    {
+        $this->teamLeader = $teamLeader;
 
         return $this;
     }
