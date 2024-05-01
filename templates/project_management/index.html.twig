@@ -1,50 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html.twig'%}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project management</title>
-    <link rel="stylesheet" href='{{asset('project_management/style.css')}}'>
-</head>
+{% block title %}project management{% endblock %}
 
-<body>
-    <ul class="project-management-nav br-15">
-        <li class="project-management-nav-item"><a class="active" href="#">project overview</a></li>
-        <li class="project-management-nav-item"><a href="#">all tasks</a></li>
-        <li class="project-management-nav-item"><a href="#">assigned tasks</a></li>
-        <li class="project-management-nav-item"><a href="#">chat room</a></li>
-    </ul>
+{% block body %}<ul class="project-management-nav br-15">
+    <li class="project-management-nav-item"><a class="active" href="#">project overview</a></li>
+    <li class="project-management-nav-item"><a href="#">all tasks</a></li>
+    <li class="project-management-nav-item"><a href="#">assigned tasks</a></li>
+    <li class="project-management-nav-item"><a href="#">chat room</a></li>
+</ul>
 
-    <section class="project-management-dashboard">
-        <form action="" method="get" class="task-management br-15">
-            <button id="filter" type="button">filter</button>
-            <input type="search" name="" id="">
-            <button type="submit">Search</button>
-            <button id="add-task" type="button">Add a new task</button>
-        </form>
+<section class="project-management-dashboard">
+    <form action="" method="get" class="task-management br-15">
+        <button id="filter" type="button">filter</button>
+        <input type="search" name="" id="">
+        <button type="submit">Search</button>
+        <button id="add-task" type="button">Add a new task</button>
+    </form>
 
-        <div class="chart-container" style="width: 800px;">
-        </div>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
 
-        <table class="task-table">
 
-            <thead>
-                <tr>
-                    <th>task label</th>
-                    <th>status</th>
-                    <th>assignee</th>
-                    <th>due date</th>
-                    <th>task creator</th>
-                </tr>
-            </thead>
-            <tbody>
+    <table class="task-table">
 
-            </tbody>
-        </table>
+        <thead>
+            <tr>
+                <th>task label</th>
+                <th>status</th>
+                <th>assignee</th>
+                <th>due date</th>
+                <th>task creator</th>
+            </tr>
+        </thead>
+        <tbody>
 
-    </section>
-    <script type="module" src="{{asset('project_management/script.js')}}"></script>
-</body>
+        </tbody>
+    </table>
 
-</html>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="{{asset('project_management/script.js')}}"></script>
+
+<script>
+    window.onload = function () {
+        const ctx = document.getElementById('myChart');
+        console.log(ctx);
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    };
+</script>
+{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href='{{asset('styles/project_management_styles/style.css')}}'>
+{% endblock %}
