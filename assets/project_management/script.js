@@ -1,6 +1,7 @@
 
 const projectManagementNav = document.querySelector(".project-management-nav");
 const navItems = document.querySelectorAll(".project-management-nav-item a");
+const projectOverviewSection = document.querySelector(".project-overview");
 const taskNumberToText = new Map([
     [0, 'blocked'],
     [1, 'progress'],
@@ -16,24 +17,27 @@ projectManagementNav.addEventListener("click", (event) => {
 
         event.target.classList.add("active");
 
+        // Check if the clicked link is "project overview"
+        if (event.target.innerHTML == "project overview") {
+            // Show the project overview section
+            projectOverviewSection.classList.add("visible");
+        } else {
+            // Hide the project overview section for other links
+            projectOverviewSection.classList.remove("visible");
+        }
+
         if (event.target.innerHTML == "all tasks") {
             fetchTasks("all")
                 .then(data => updateTasksTableUi(data))
                 .catch(error => console.error('Error fetching tasks:', error));
+        } else if (event.target.innerHTML == "assigned tasks") {
+            fetchTasks("assigned")
+                .then(data => updateTasksTableUi(data))
+                .catch(error => console.error('Error fetching tasks:', error));
         }
-
-        else if (event.target.innerHTML == "assigned tasks") {
-            fetchTasks("assigned").then(data => updateTasksTableUi(data)).catch(error => console.error('Error fetching tasks:', error));
-            ;
-        }
-
-        else if (event.target.innerHTML == "project overview") {
-            // fetchProjectData();
-
-        }
-
     }
 });
+
 
 function fetchTasks(action) {
     const url = `/project/management/${action}tasks`;

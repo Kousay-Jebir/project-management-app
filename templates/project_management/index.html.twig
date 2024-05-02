@@ -17,7 +17,7 @@
         <button id="add-task" type="button">Add a new task</button>
     </form>
 
-    <div class="project-overview br-15">
+    <div class="project-overview br-15 visible">
 
         <div class="chart-container">
             <canvas height="300px" id="myChart"></canvas>
@@ -66,6 +66,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="{{asset('project_management/script.js')}}"></script>
 <script src="{{asset('project_management/task_status_management.js')}}"></script>
+{# <script src="{{asset('project_management/project_management_navigation.js')}}"></script> #}
 <script>
     window.onload = function () {
         const ctx = document.getElementById('myChart');
