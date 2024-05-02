@@ -4,8 +4,8 @@ const navItems = document.querySelectorAll(".project-management-nav-item a");
 const taskNumberToText = new Map([
     [0, 'blocked'],
     [1, 'progress'],
-    [2, 'review'],
-    [3, 'done']
+    [2, 'done'],
+    [3, 'review']
 ]);
 projectManagementNav.addEventListener("click", (event) => {
     event.preventDefault();
@@ -64,7 +64,7 @@ function updateTasksTableUi(tasks) {
         taskStatus = taskNumberToText.get(taskData.status);
         row.innerHTML = `
             <td>${taskData.label}</td>
-            <td class="task-${taskStatus}">${taskStatus.toUpperCase()}</td>
+            <td id="${taskData.id}" class="task-${taskStatus} task-status">${taskStatus.toUpperCase()}</td>
             <td>${taskData.assignee}</td>
             <td>${taskData.due_date}</td>
             <td>${taskData.creator}</td>

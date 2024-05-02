@@ -116,10 +116,11 @@ body {
     width: 100%;
 }
 
+
 .task-table,
 th,
 td {
-    border-collapse: collapse;
+    border-collapse: separate;
 }
 
 /* .task-table tbody tr {

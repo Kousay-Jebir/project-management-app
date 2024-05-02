@@ -30,11 +30,11 @@
         <div class="project-info">
             <div>
                 <h2>Project name</h2>
-                <p>Project #1</p>
+                <p>{{project.projectName}}</p>
             </div>
             <div>
                 <h2>Project description</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis iure adipisci quam!</p>
+                <p>{{project.projectDescription}}</p>
             </div>
 
         </div>
@@ -65,7 +65,7 @@
 {{ parent() }}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="{{asset('project_management/script.js')}}"></script>
-
+<script src="{{asset('project_management/task_status_management.js')}}"></script>
 <script>
     window.onload = function () {
         const ctx = document.getElementById('myChart');
