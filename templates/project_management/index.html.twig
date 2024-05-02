@@ -17,8 +17,28 @@
         <button id="add-task" type="button">Add a new task</button>
     </form>
 
-    <div>
-        <canvas id="myChart"></canvas>
+    <div class="project-overview br-15">
+
+        <div class="chart-container">
+            <canvas height="300px" id="myChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas height="300px" id="progressChart"></canvas>
+        </div>
+
+        <div class="project-info">
+            <div>
+                <h2>Project name</h2>
+                <p>Project #1</p>
+            </div>
+            <div>
+                <h2>Project description</h2>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis iure adipisci quam!</p>
+            </div>
+
+        </div>
+
     </div>
 
 
@@ -51,19 +71,77 @@
         const ctx = document.getElementById('myChart');
         console.log(ctx);
         new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Blocked', 'In progress', 'Done', 'In review'],
+                datasets: [{
+                    data: [40, 15, 15, 30],
+                    backgroundColor: [
+                        '#DC646A',
+                        '#7F77F1',
+                        '#33A069',
+                        '#F9BE33'
+                    ],
+                    borderColor: '#f6f6f6'
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+
+            }
+
+        });
+
+
+        // Sample data - Replace this with your actual data
+        var teamMembers = ["Alice", "Bob", "Charlie", "David"];
+        var tasksCompleted = [5, 12, 3, 12]; // Number of tasks completed by each team member
+        var totalTasks = [10, 15, 8, 12]; // Total tasks assigned to each team member
+
+        // Calculating progress percentage for each team member
+        var progressPercentage = tasksCompleted.map((completed, index) => {
+            return (completed / totalTasks[index]) * 100;
+        });
+
+        // Chart.js code
+        var ctx2 = document.getElementById('progressChart');
+        var progressChart = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: teamMembers,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: progressPercentage,
+                    backgroundColor: '#3C6E7180',
+                    borderColor: '#284B63',
                     borderWidth: 1
                 }]
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Progress Percentage (%)'
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Team Members'
+                        }
+                    }]
+                },
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 }
             }

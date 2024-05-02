@@ -20,7 +20,7 @@ class ProjectManagementController extends AbstractController
     #[Route('/project/management/alltasks', name: 'project_management_all_tasks', methods: ['GET'])]
     public function getAllTasksData(TaskRepository $taskRepository, Request $request): Response
     {
-        $projectId = 1;
+        $projectId = 2;
         $tasks = $taskRepository->findBy(['project' => $projectId]);
         $formattedTasks = $this->formatTasks($tasks);
 
@@ -31,7 +31,7 @@ class ProjectManagementController extends AbstractController
     public function getAssignedTasksData(TaskRepository $taskRepository, Request $request): Response
     {
         $userId = $this->getUser()->getId();
-        $projectId = 1;
+        $projectId = 2;
 
         $tasks = $taskRepository->findBy(['project' => $projectId, 'assignedUser' => $userId]);
         $formattedTasks = $this->formatTasks($tasks);
