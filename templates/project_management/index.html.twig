@@ -10,12 +10,12 @@
 </ul>
 
 <section class="project-management-dashboard">
-    <form action="" method="get" class="task-management br-15">
-        <button id="filter" type="button">filter</button>
-        <input type="search" name="" id="">
-        <button type="submit">Search</button>
-        <button id="add-task" type="button">Add a new task</button>
-    </form>
+
+    {{form(form)}}
+
+    {% if success %}
+    <div>Task Added successfully !</div>
+    {%endif%}
 
     <div class="project-overview br-15 visible">
 

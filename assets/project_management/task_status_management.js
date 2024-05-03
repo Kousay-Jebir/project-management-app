@@ -19,7 +19,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
             body: requestBody,
         })
             .then(response => {
-                if (!response.ok) {
+                if (response.ok) {
+                    if (response.status === 403) {
+                        throw new Error('Forbidden: You are not allowed to update this task.');
+                    }
+                }
+                else {
                     throw new Error('Network response was not ok');
                 }
 
@@ -60,10 +65,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const changeTaskStatusHandler = (event) => {
         const clickedElemnt = event.target;
         if (!(clickedElemnt.classList.contains("task-status"))) {
-            console.log("this doesnt work")
             return
         }
-        console.log("am i inside ")
         const status = clickedElemnt.classList[0].split('-')[1];
         const newStatus = changeTaskStatus(status, clickedElemnt);
         updateStatusInDataBase(clickedElemnt.id, newStatus);

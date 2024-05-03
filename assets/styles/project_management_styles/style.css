@@ -75,6 +75,12 @@ body {
     font-size: 0.75rem;
 }
 
+.task-status:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+
+}
+
 .project-management-nav {
     background-color: var(--secondary-background-color);
     list-style-type: none;

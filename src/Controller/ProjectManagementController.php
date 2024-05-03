@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Form\NewTaskFormType;
 use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,12 +14,36 @@ use App\Entity\Task;
 class ProjectManagementController extends AbstractController
 {
     #[Route('/project/management', name: 'app_project_management')]
-    public function index(ProjectRepository $projectRepository): Response
+    public function index(ProjectRepository $projectRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+        // creates a task object and initializes some data for this example
+        $task = new Task();
+
+        $form = $this->createForm(NewTaskFormType::class, $task);
         $project = $projectRepository->find(2);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $task = $form->getData();
+            $task->setTaskStatus(0);
+            $task->setTaskCreator($this->getUser());
+            $task->setProject($project);
+
+
+            $entityManager->persist($task);
+
+
+            $entityManager->flush();
+            return $this->redirectToRoute('add_task_success');
+        }
+
+
         return $this->render('project_management/index.html.twig', [
             'controller_name' => 'ProjectManagementController',
-            'project' => $project
+            'project' => $project,
+            'form' => $form,
+            'success' => false
         ]);
     }
 
@@ -44,24 +69,7 @@ class ProjectManagementController extends AbstractController
         return $this->json($formattedTasks);
     }
 
-    private function formatTasks($tasks): array
-    {
-        $formattedTasks = [];
 
-        foreach ($tasks as $task) {
-            $formattedTasks[] = [
-                'label' => $task->getTaskName(),
-                'description' => $task->getTaskDescription(),
-                'status' => $task->getTaskStatus(),
-                'assignee' => $task->getAssignedUser()->getUserName(),
-                'due_date' => '14/05/24', // You may need to adjust this
-                'creator' => $task->getTaskCreator()->getUserName(),
-                'id' => $task->getId()
-            ];
-        }
-
-        return $formattedTasks;
-    }
 
     #[Route('/project/management/update-status/{taskId}', name: 'update_task_status', methods: ['PATCH'])]
     public function updateTaskStatus(TaskRepository $taskRepository, Request $request, $taskId, EntityManagerInterface $entityManager): Response
@@ -85,11 +93,38 @@ class ProjectManagementController extends AbstractController
             return new Response('Task not found', Response::HTTP_NOT_FOUND);
         }
 
+        $currentUser = $this->getUser();
+        if ($task->getAssignedUser() !== $currentUser) {
+            return new Response('Forbidden: You are not allowed to update this task.', Response::HTTP_FORBIDDEN);
+        }
         // Update the status
         $task->setTaskStatus($statusMap[$status]);
         $entityManager->flush();
 
         // Return a success response
         return new Response(Response::HTTP_OK);
+    }
+    #[Route('/project/management/add-task-success', name: 'add_task_success')]
+    public function taskSuccess(): Response
+    {
+        return $this->render('project_management/success.html.twig');
+    }
+    private function formatTasks($tasks): array
+    {
+        $formattedTasks = [];
+
+        foreach ($tasks as $task) {
+            $formattedTasks[] = [
+                'label' => $task->getTaskName(),
+                'description' => $task->getTaskDescription(),
+                'status' => $task->getTaskStatus(),
+                'assignee' => $task->getAssignedUser()->getUserName(),
+                'due_date' => '14/05/24', // You may need to adjust this
+                'creator' => $task->getTaskCreator()->getUserName(),
+                'id' => $task->getId()
+            ];
+        }
+
+        return $formattedTasks;
     }
 }
