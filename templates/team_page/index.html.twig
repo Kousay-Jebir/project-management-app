@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TeamPage{% endblock %}
+
+{% block body %}
+ <header class="header">
+    </header>
+    <div class="team-page-structure">
+    <div class="sidebar">
+        <div class="team-code-component">
+            <h1>Team Code</h1>
+            <p style="font-size: 20px;" id="team-code">{{team.getTeamJoinCode}}</p>
+        </div>
+        <div class="team-leader-component" id="team-leader">{{leader.getUserName}}</div>
+    </div>
+    <div class="main-departement">
+    <div class="swiper">
+        <button class="swiper-button" id="overview-button">overview</button>
+        <button class="swiper-button" id="projects-button">projects</button>
+        <button class="swiper-button" id="members-button">members</button>
+        
+    </div>
+    <div  id="team-name" class="team-header">
+    {{team.getTeamName}}
+    </div>
+    <div class="main-departement-content" id="content">
+        <div id="team-description">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim blanditiis repellat sed, ipsam a nesciunt aspernatur ex culpa explicabo. Sed impedit eaque similique. Similique nobis vel dicta, distinctio ea quae! <br/>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, cupiditate? Deleniti aut fugiat incidunt nobis beatae sequi, dicta exercitationem, commodi temporibus eveniet maxime saepe. In dignissimos repudiandae ex quo aliquid? <br/>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore nostrum deserunt iure quae illum accusamus tempore quisquam quo sit, a aliquid sunt, est rem perspiciatis similique at laboriosam commodi?
+    </div>
+    <div>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim blanditiis repellat sed, ipsam a nesciunt aspernatur ex culpa explicabo. Sed impedit eaque similique. Similique nobis vel dicta, distinctio ea quae! <br/>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, cupiditate? Deleniti aut fugiat incidunt nobis beatae sequi, dicta exercitationem, commodi temporibus eveniet maxime saepe. In dignissimos repudiandae ex quo aliquid? <br/>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore nostrum deserunt iure quae illum accusamus tempore quisquam quo sit, a aliquid sunt, est rem perspiciatis similique at laboriosam commodi?
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href='{{asset('styles/TeamPage/style.css')}}'>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script type="module" src="{{asset('TeamPage/TeamPageScript.js')}}"></script>
+{% endblock %}
