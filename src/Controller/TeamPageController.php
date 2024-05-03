@@ -11,11 +11,11 @@ use App\Entity\User;
 
 class TeamPageController extends AbstractController
 {
-    #[Route('TeamPage', name: 'app_team_page')]
-    public function index(EntityManagerInterface $entityManager): Response
+    #[Route('TeamPage/{id}', name: 'app_team_page')]
+    public function index(EntityManagerInterface $entityManager,$id): Response
     {
         $user=$this->getUser();
-        $team=$user->getTeam()->toArray()[0];
+        $team=$entityManager->getRepository(Team:: class)->findOneBy(['id'=>$id]);
         $leader_id=$team->getTeamLeader()->getId();
         $team_leader=$entityManager->getRepository(User:: class)->findOneBy(['id'=>$leader_id]);
         
