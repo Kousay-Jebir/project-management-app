@@ -13,12 +13,12 @@
    <a href="/logout">Logout</a>
 </div>
 <div class="team-container">
-        {% for member in teams %}
+        {% for team in teams %}
             <div class="team-member">
-                <h2>{{ member.getTeamName()}}</h2>
+                <h2>{{ team.getTeamName()}}</h2>
 
-                <p>{{ member.getTeamDescription()}}</p>
-                <a href=""><button>view team</button></a>
+                <p>{{ team.getTeamDescription()}}</p>
+                <a href="{{ path('app_team_page', {id: team.getId()}) }}"><button>view team</button></a>
 
                 <!-- Add other properties as needed -->
             </div>
