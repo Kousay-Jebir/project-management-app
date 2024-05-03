@@ -27,7 +27,7 @@ class Team
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'team')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'team',fetch:'EAGER')]
     private Collection $users;
 
     /**

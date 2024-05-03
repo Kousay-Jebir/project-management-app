@@ -1,13 +1,3 @@
 body {
     background-color: rgb(255, 255, 255);
 }
-
-.myContainer {
-    position: relative;
-    top: 100px;
-    width: 100px;
-    height: 100px;
-    background-color: aqua;
-
-
-}

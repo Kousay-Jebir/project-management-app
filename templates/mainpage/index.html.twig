@@ -9,7 +9,46 @@
 </style>
 
 <div class="example-wrapper">
-   {{app.user.email}}
+   {{app.user.getUserName()}}
    <a href="/logout">Logout</a>
 </div>
+<div class="team-container">
+        {% for team in teams %}
+            <div class="team-member">
+                <h2>{{ team.getTeamName()}}</h2>
+
+                <p>{{ team.getTeamDescription()}}</p>
+                <a href="{{ path('app_team_page', {id: team.getId()}) }}"><button>view team</button></a>
+
+                <!-- Add other properties as needed -->
+            </div>
+        {% endfor %}
+</div>
+<button id="btn" >Join a Team</button>
+
+<div id="drop-form" class="closed">
+    
+</div>
+<script>
+    let drop=document.getElementById("btn");
+    drop.addEventListener('click',handleClick)
+    function handleClick(event){
+        let dropForm=document.getElementById("drop-form");
+        if(dropForm.className==="closed")
+        {
+            dropForm.innerHTML=`<form action="{{ path('app_code_input') }}" method="post">
+        <input type="text" name="input_field">
+        <button type="submit">Submit</button>
+    </form>`
+    dropForm.className="open"
+
+}
+else{
+    dropForm.innerHTML=""
+    dropForm.className="closed"
+
+}
+    }
+</script>
+
 {% endblock %}

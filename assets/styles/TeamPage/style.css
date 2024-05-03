@@ -1,0 +1,100 @@
+.header{
+    width:100%;
+    height:7vh;
+    background-color: rgb(208, 255, 255);
+    top:0;
+    position: sticky;
+}
+.team-header{
+    width:100%;
+    height:25vh;
+    background-color: rgb(192, 255, 254);
+    border-radius: 0px 0px 20px 20px;
+    top:16vh;
+    position: sticky;
+    font-size: 80px;
+    display: flex;
+    align-items: end;
+    
+    
+
+}
+.team-page-structure{
+
+    width: 100%;
+    height: 300vh;
+    display: flex;
+
+}
+.sidebar{
+    width:20%;
+    height:92vh;
+    border-radius: 0px 20px 20px 0px;
+    background-color: rgb(211, 211, 211);
+    top:7vh;
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 30px 0px;
+    align-items: center;
+    gap:10px
+}
+.team-code-component{
+    width:80%;
+    background-color: rgb(220, 244, 255);
+    height:30%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    
+}
+.team-leader-component{
+    width:80%;
+    background-color: rgb(211, 242, 255);
+    height:10vh;
+    border-radius: 20px;
+    font-size: 25px;
+    text-align: center;
+    padding-top: 10px;
+}
+.main-departement{
+    background-color: rgb(255, 255, 255);
+    width: 80%;
+    
+}
+.swiper{
+    background-color: white;
+    width: 100%;
+    height: 10vh;
+    top:7vh;
+    position: sticky;
+}
+.main-departement-content{
+    padding: 5vh 3vw;
+    gap:10vh;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:start;
+}
+.swiper-button{
+    width: 20%;
+    height: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background-color: rgb(102, 255, 247);
+    border-radius: 10PX;
+    font-size: 30PX;
+
+    
+}
+.swiper-button:hover{
+    scale: 102%;
+    border-bottom: solid rgb(45, 182, 255) 10px;
+}
