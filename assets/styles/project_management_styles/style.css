@@ -75,6 +75,12 @@ body {
     font-size: 0.75rem;
 }
 
+.task-status:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+
+}
+
 .project-management-nav {
     background-color: var(--secondary-background-color);
     list-style-type: none;
@@ -116,10 +122,11 @@ body {
     width: 100%;
 }
 
+
 .task-table,
 th,
 td {
-    border-collapse: collapse;
+    border-collapse: separate;
 }
 
 /* .task-table tbody tr {
@@ -165,4 +172,112 @@ td {
     border-radius: 1rem;
     padding: 0.5rem 1rem;
     color: var(--main-text-color);
+}
+
+.project-overview {
+
+    background-color: #f6f6f6;
+    gap: 1rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: none;
+}
+
+.project-overview.visible {
+    display: flex;
+    background-color: #f6f6f6;
+    gap: 1rem;
+    padding: 1rem;
+    margin-top: 1rem;
+
+}
+
+
+
+.chart-container {
+
+    height: 300px;
+    width: 300px;
+}
+
+.project-info {
+    border-radius: 15px;
+    color: var(--main-text-color);
+
+}
+
+.project-info h2 {
+    color: var(--secondary-text-color);
+}
+
+.add-task-form {
+    background-color: var(--secondary-background-color);
+
+    border-radius: 15px;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row input,
+.form-row select {
+    border: none;
+    border-radius: 15px;
+    padding-block: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.form-row label {
+    color: var(--main-text-color);
+}
+
+form button {
+    display: block;
+    padding: 0.4rem 2rem;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--accent-background-color);
+    color: var(--main-background-color);
+}
+
+/* Apply truncation to cells with the 'truncate' class */
+td.truncate {
+    max-width: 200px;
+    /* Adjust the maximum width as needed */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }
