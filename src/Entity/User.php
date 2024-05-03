@@ -41,7 +41,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Team>
      */
-    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'users',fetch:'EAGER')]
+    #[JoinTable(name: 'user_team')]
     private Collection $team;
 
     /**

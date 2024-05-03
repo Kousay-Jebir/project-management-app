@@ -9,7 +9,19 @@
 </style>
 
 <div class="example-wrapper">
-   {{app.user.email}}
+   {{app.user.getUserName()}}
    <a href="/logout">Logout</a>
 </div>
+<div class="team-container">
+        {% for member in teams %}
+            <div class="team-member">
+                <h2>{{ member.getTeamName()}}</h2>
+
+                <p>{{ member.getTeamDescription()}}</p>
+
+                <!-- Add other properties as needed -->
+            </div>
+        {% endfor %}
+</div>
+
 {% endblock %}
