@@ -43,7 +43,6 @@ class ProjectManagementController extends AbstractController
             'controller_name' => 'ProjectManagementController',
             'project' => $project,
             'form' => $form,
-            'success' => false
         ]);
     }
 

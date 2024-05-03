@@ -16,13 +16,15 @@ class NewTaskFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('taskName')
-            ->add('taskDescription')
+
+            ->add('taskName', null, ['label' => 'Task label'])
+            ->add('taskDescription', null, ['label' => 'Description'])
             ->add('assignedUser', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
+                'choice_label' => 'userName',
+                'label' => 'Assignee'
             ])
-            ->add('save', SubmitType::class)
+            ->add('Add', SubmitType::class)
         ;
     }
 

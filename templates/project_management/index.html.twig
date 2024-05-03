@@ -11,11 +11,18 @@
 
 <section class="project-management-dashboard">
 
-    {{form(form)}}
+    {{ form_start(form, { 'attr': {'class': 'add-task-form', 'name': ''} }) }}
+    <div class="form-error">
+        {{ form_errors(form) }}
+    </div>
 
-    {% if success %}
-    <div>Task Added successfully !</div>
-    {%endif%}
+    <div class="form-row">
+        {{ form_row(form.taskName, {'label': 'Task label'}) }}
+        {{ form_row(form.taskDescription, {'label': 'Description'}) }}
+        {{ form_row(form.assignedUser, {'label': 'Assignee'}) }}
+    </div>
+    {{ form_end(form) }}
+
 
     <div class="project-overview br-15 visible">
 
