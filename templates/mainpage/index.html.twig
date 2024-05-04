@@ -8,6 +8,7 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
+
 <div class="example-wrapper">
    {{app.user.getUserName()}}
    <a href="/logout">Logout</a>
@@ -29,6 +30,9 @@
 <div id="drop-form" class="closed">
     
 </div>
+
+<a href="{{ path('app_create_team') }}"><button>Create Team</button></a>
+
 <script>
     let drop=document.getElementById("btn");
     drop.addEventListener('click',handleClick)
