@@ -16,7 +16,8 @@
 }
 
 li,
-ul {
+ul,
+p {
     padding: 0;
     margin: 0;
 }
@@ -256,4 +257,29 @@ td.truncate {
     /* Set text color for table headers */
     font-weight: bold;
     /* Make table headers bold */
+}
+
+.chat-room {
+    background-color: #f6f6f6;
+    border-radius: 15px;
+    margin-top: 1rem;
+    width: 70%;
+    padding: 1rem;
+
+}
+
+.comment-profile-image img {
+    display: block;
+    max-width: 50px;
+    aspect-ratio: 1;
+}
+
+.comment-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block: 1rem;
+    border: 2px solid var(--secondary-text-color);
+    border-radius: 15px;
+    padding: 1rem;
 }
