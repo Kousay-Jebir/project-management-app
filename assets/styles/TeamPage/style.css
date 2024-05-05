@@ -98,3 +98,40 @@
     scale: 102%;
     border-bottom: solid rgb(45, 182, 255) 10px;
 }
+.overview-content{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 30px;
+}
+.team-description{
+    height: 30vh;
+    width: 40vw;
+    border-radius: 20px;
+    background-color: aquamarine;
+    padding: 20px;
+}
+.team-current-tasks{
+    height: 50vh;
+    width: 30vw;
+    background-color: aquamarine;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+.task-component{
+    
+    font-size: 18px;
+    background-color: aqua;
+    width: 85%;
+    padding: 20px;
+}
+.description-text{
+    font-size: 20px;
+}
+.hidden {
+    display: none;
+}

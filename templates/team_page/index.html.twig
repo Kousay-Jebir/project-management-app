@@ -4,6 +4,7 @@
 
 {% block body %}
  <header class="header">
+ {{user.getUserName}}
     </header>
     <div class="team-page-structure">
     <div class="sidebar">
@@ -11,7 +12,8 @@
             <h1>Team Code</h1>
             <p style="font-size: 20px;" id="team-code">{{team.getTeamJoinCode}}</p>
         </div>
-        <div class="team-leader-component" id="team-leader">{{leader.getUserName}}</div>
+        <div class="team-leader-component" id="team-leader">
+        Team Leader:<br/>{{leader.getUserName}}</div>
     </div>
     <div class="main-departement">
     <div class="swiper">
@@ -21,14 +23,10 @@
         
     </div>
     <div  id="team-name" class="team-header">
-    {{team.getTeamName}}
+    {{team.getTeamName}}<span style="display:none" id="team_id">{{team_id}}</span>
     </div>
     <div class="main-departement-content" id="content">
-        <div id="team-description">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim blanditiis repellat sed, ipsam a nesciunt aspernatur ex culpa explicabo. Sed impedit eaque similique. Similique nobis vel dicta, distinctio ea quae! <br/>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, cupiditate? Deleniti aut fugiat incidunt nobis beatae sequi, dicta exercitationem, commodi temporibus eveniet maxime saepe. In dignissimos repudiandae ex quo aliquid? <br/>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur inventore nostrum deserunt iure quae illum accusamus tempore quisquam quo sit, a aliquid sunt, est rem perspiciatis similique at laboriosam commodi?
-    </div>
+        
     <div>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim blanditiis repellat sed, ipsam a nesciunt aspernatur ex culpa explicabo. Sed impedit eaque similique. Similique nobis vel dicta, distinctio ea quae! <br/>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium, cupiditate? Deleniti aut fugiat incidunt nobis beatae sequi, dicta exercitationem, commodi temporibus eveniet maxime saepe. In dignissimos repudiandae ex quo aliquid? <br/>
