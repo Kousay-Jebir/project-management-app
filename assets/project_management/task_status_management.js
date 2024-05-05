@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             classListArray.unshift(`task-${newStatus}`);
             task.className = classListArray.join(' ');
         }
-        task.innerHTML = newStatus.toUpperCase();
+        task.innerHTML = newStatus;
         return newStatus
     };
 
