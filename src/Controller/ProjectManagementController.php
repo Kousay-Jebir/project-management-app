@@ -110,12 +110,12 @@ class ProjectManagementController extends AbstractController
     #[Route('/project/management/add-task-success', name: 'add_task_success')]
     public function taskSuccess(): Response
     {
-        return $this->render('project_management/success.html.twig');
+        return $this->redirect('app_project_management');
     }
 
     #[Route('/project/management/add-comment-success', name: 'add_comment_success')]
     public function commentSuccess(): Response
     {
-        return $this->render('project_management/commentSuccess.html.twig');
+        return $this->redirect('app_project_management');
     }
 }
