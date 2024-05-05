@@ -48,6 +48,7 @@ class ProjectManagementController extends AbstractController
             $comment = $form2->getData();
             $comment->setAssosiatedUser($this->getUser());
             $comment->setAssosiatedProject($project);
+            $comment->setCommentDate(new \DateTimeImmutable());
 
             $entityManager->persist($comment);
             $entityManager->flush();

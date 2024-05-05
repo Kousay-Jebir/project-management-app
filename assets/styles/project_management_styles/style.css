@@ -112,6 +112,10 @@ body {
 .project-management-dashboard {
     display: flex;
     justify-content: center;
+    border-radius: 15px;
+    background-color: var(--secondary-background-color);
+    margin-top: 1rem;
+    padding: 1rem;
 }
 
 
@@ -131,7 +135,7 @@ body {
     background-color: #f6f6f6;
     gap: 1rem;
     padding: 1rem;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     display: flex;
 }
 
@@ -240,7 +244,7 @@ td.truncate {
     border-spacing: 1rem;
     background-color: #f6f6f6;
     border-radius: 15px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
 }
 
 .task-table th,
@@ -263,7 +267,7 @@ td.truncate {
 .chat-room {
     background-color: #f6f6f6;
     border-radius: 15px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     width: 70%;
     padding: 1rem;
 
@@ -279,16 +283,20 @@ td.truncate {
     display: flex;
     gap: 1rem;
     margin-block: 1rem;
-    border-bottom: 2px solid var(--secondary-text-color);
+    /* border-bottom: 2px solid var(--secondary-text-color); */
+    border-radius: 2rem;
+    background-color: #b9dddf;
     padding: 1rem;
     color: var(--main-text-color);
 }
 
 #comment_commentText {
     border-radius: 15px;
-    width: 100%;
+    width: 75%;
     resize: none;
     border: none;
     margin-bottom: 1rem;
+    font-size: inherit;
+    font-family: inherit;
 
 }

@@ -25,6 +25,9 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?User $assosiatedUser = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $commentDate = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +65,18 @@ class Comment
     public function setAssosiatedUser(?User $assosiatedUser): static
     {
         $this->assosiatedUser = $assosiatedUser;
+
+        return $this;
+    }
+
+    public function getCommentDate(): ?\DateTimeImmutable
+    {
+        return $this->commentDate;
+    }
+
+    public function setCommentDate(\DateTimeImmutable $commentDate): static
+    {
+        $this->commentDate = $commentDate;
 
         return $this;
     }
