@@ -1,30 +1,37 @@
-{% extends 'base.html.twig'%}
+{% extends '/project_management/base.html.twig'%}
 
 {% block title %}project management{% endblock %}
 
-{% block body %}<ul class="project-management-nav br-15">
-    <li class="project-management-nav-item"><a class="active" href="#">project overview</a></li>
-    <li class="project-management-nav-item"><a href="#">all tasks</a></li>
-    <li class="project-management-nav-item"><a href="#">assigned tasks</a></li>
-    <li class="project-management-nav-item"><a href="#">chat room</a></li>
+{% block body %}
+<ul class="project-management-nav br-15">
+    <li class="project-management-nav-item"><a class="active" href="#" data-section="project-overview">project
+            overview</a></li>
+    <li class="project-management-nav-item"><a href="#" id="all-tasks" data-section="task-table">all tasks</a></li>
+    <li class="project-management-nav-item"><a href="#" data-section="task-table" data-user="{{app.user.userName}}"
+            id="assigned-tasks-link">assigned tasks</a></li>
+    <li class="project-management-nav-item"><a href="#" data-section="chat-room">chat room</a></li>
 </ul>
+
+{{ form_start(form, { 'attr': {'class': 'add-task-form', 'name': ''} }) }}
+<div class="form-error">
+    {{ form_errors(form) }}
+</div>
+
+<div class="form-row">
+    {{ form_row(form.taskName, {'label': 'Task label'}) }}
+    {{ form_row(form.taskDescription, {'label': 'Description'}) }}
+    {{ form_row(form.assignedUser, {'label': 'Assignee'}) }}
+</div>
+{{ form_end(form) }}
+
+
 
 <section class="project-management-dashboard">
 
-    {{ form_start(form, { 'attr': {'class': 'add-task-form', 'name': ''} }) }}
-    <div class="form-error">
-        {{ form_errors(form) }}
-    </div>
-
-    <div class="form-row">
-        {{ form_row(form.taskName, {'label': 'Task label'}) }}
-        {{ form_row(form.taskDescription, {'label': 'Description'}) }}
-        {{ form_row(form.assignedUser, {'label': 'Assignee'}) }}
-    </div>
-    {{ form_end(form) }}
 
 
-    <div class="project-overview br-15 visible">
+
+    <div id="project-overview" class="project-overview br-15 visible">
 
         <div class="chart-container">
             <canvas height="300px" id="myChart"></canvas>
@@ -48,7 +55,6 @@
 
     </div>
 
-
     <table class="task-table">
 
         <thead>
@@ -60,10 +66,23 @@
                 <th>task creator</th>
             </tr>
         </thead>
-        <tbody>
 
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.taskName }}</td>
+                <td id="{{task.id}}" class="task-{{ attribute(statusMap, task.taskStatus) }} task-status">
+                    {{ attribute(statusMap, task.taskStatus) }}
+                </td>
+                <td class="assigned-user">{{ task.assignedUser.userName }}</td>
+                <td class="truncate">{{ task.taskDescription }}</td>
+                <td>{{ task.taskCreator.userName }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
+
+
 
 </section>
 {% endblock %}

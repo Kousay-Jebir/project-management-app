@@ -17,8 +17,8 @@ class NewTaskFormType extends AbstractType
     {
         $builder
 
-            ->add('taskName', null, ['label' => 'Task label'])
-            ->add('taskDescription', null, ['label' => 'Description'])
+            ->add('taskName', null, ['label' => 'Task label', 'required' => true])
+            ->add('taskDescription', null, ['label' => 'Description', 'required' => true])
             ->add('assignedUser', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'userName',

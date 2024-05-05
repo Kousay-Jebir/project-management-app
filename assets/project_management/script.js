@@ -1,81 +1,52 @@
 
+let areTasksAltered = false;
 const projectManagementNav = document.querySelector(".project-management-nav");
 const navItems = document.querySelectorAll(".project-management-nav-item a");
-const projectOverviewSection = document.querySelector(".project-overview");
+const sections = document.querySelectorAll('.project-management-dashboard > *');
 const taskNumberToText = new Map([
     [0, 'blocked'],
     [1, 'progress'],
     [2, 'done'],
     [3, 'review']
 ]);
+
 projectManagementNav.addEventListener("click", (event) => {
     event.preventDefault();
-    if (event.target.tagName == "A") {
-        navItems.forEach((navItem) => {
-            navItem.classList.remove('active')
-        })
-
-        event.target.classList.add("active");
-
-        // Check if the clicked link is "project overview"
-        if (event.target.innerHTML == "project overview") {
-            // Show the project overview section
-            projectOverviewSection.classList.add("visible");
-        } else {
-            // Hide the project overview section for other links
-            projectOverviewSection.classList.remove("visible");
-        }
-
-        if (event.target.innerHTML == "all tasks") {
-            fetchTasks("all")
-                .then(data => updateTasksTableUi(data))
-                .catch(error => console.error('Error fetching tasks:', error));
-        } else if (event.target.innerHTML == "assigned tasks") {
-            fetchTasks("assigned")
-                .then(data => updateTasksTableUi(data))
-                .catch(error => console.error('Error fetching tasks:', error));
-        }
+    if (event.target.tagName != "A") {
+        return
     }
-});
 
-
-function fetchTasks(action) {
-    const url = `/project/management/${action}tasks`;
-    console.log(url);
-    return fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    navItems.forEach((navItem) => {
+        navItem.classList.remove('active')
+        navItem == event.target ? navItem.classList.add("active") : navItem.classList.remove("active");
     })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch tasks');
-            }
-            return response.json();
-        });
-}
 
-function updateTasksTableUi(tasks) {
-    const tableBody = document.querySelector('.task-table tbody');
-    let taskStatus;
-    // Clear existing table rows
-    tableBody.innerHTML = '';
-
-    // Loop through tasks and create table rows
-    tasks.forEach(taskData => {
-        const row = document.createElement('tr');
-        taskStatus = taskNumberToText.get(taskData.status);
-        row.innerHTML = `
-            <td>${taskData.label}</td>
-            <td id="${taskData.id}" class="task-${taskStatus} task-status">${taskStatus.toUpperCase()}</td>
-            <td>${taskData.assignee}</td>
-            <td class="truncate">${taskData.description}</td>
-            <td>${taskData.creator}</td>
-        `;
-        tableBody.appendChild(row);
+    // Toggle visibility of content based on navbar item clicked
+    const sectionName = event.target.dataset.section;
+    sections.forEach(section => {
+        if (section.classList.contains(sectionName)) {
+            section.classList.add('visible');
+        } else {
+            section.classList.remove('visible');
+        }
     });
-}
+
+    if (event.target.id == "all-tasks" && areTasksAltered == true) {
+        // Get the table element
+        const taskTable = document.querySelector('.task-table');
+        // Get all rows in the table body
+        const rows = taskTable.querySelectorAll('tbody tr');
+
+        // Loop through each row and hide if not an assigned task
+        rows.forEach(row => {
+            const assignedUser = row.querySelector('.assigned-user');
+
+            row.style.display = ''; // Show the row
+            console.log(row)
+
+        });
+    }
+})
 
 document.querySelector(".task-table").addEventListener('click', (event) => {
     const target = event.target;
@@ -127,3 +98,33 @@ function closeModal(event) {
         modalContainer.remove();
     }
 }
+
+
+
+function showAssignedTasks(userName) {
+    areTasksAltered = true;
+    // Get the table element
+    const taskTable = document.querySelector('.task-table');
+    // Get all rows in the table body
+    const rows = taskTable.querySelectorAll('tbody tr');
+
+    // Loop through each row and hide if not an assigned task
+    rows.forEach(row => {
+        const assignedUser = row.querySelector('.assigned-user');
+        if (assignedUser.innerHTML !== userName) {
+            row.style.display = 'none';
+        } else {
+            row.style.display = ''; // Show the row
+            console.log(row)
+        }
+    });
+}
+
+// Call the function when the "Assigned Tasks" link is clicked
+const assignedTasksLink = document.getElementById('assigned-tasks-link');
+assignedTasksLink.addEventListener('click', function (event) {
+    event.preventDefault();
+    showAssignedTasks(event.target.dataset.user);
+});
+
+

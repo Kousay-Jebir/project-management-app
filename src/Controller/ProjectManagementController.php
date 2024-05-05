@@ -14,59 +14,44 @@ use App\Entity\Task;
 class ProjectManagementController extends AbstractController
 {
     #[Route('/project/management', name: 'app_project_management')]
-    public function index(ProjectRepository $projectRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(ProjectRepository $projectRepository, TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        // creates a task object and initializes some data for this example
-        $task = new Task();
+        $statusMap = [
+            0 => 'blocked',
+            1 => 'progress',
+            2 => 'done',
+            3 => 'review'
+        ];
 
+        $project = $projectRepository->find(2); // Replace 2 with dynamic project ID
+        $task = new Task();
         $form = $this->createForm(NewTaskFormType::class, $task);
-        $project = $projectRepository->find(2);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $task = $form->getData();
             $task->setTaskStatus(0);
             $task->setTaskCreator($this->getUser());
             $task->setProject($project);
 
-
             $entityManager->persist($task);
-
-
             $entityManager->flush();
+
             return $this->redirectToRoute('add_task_success');
         }
 
+        // Fetch project tasks
+        $tasks = $taskRepository->findBy(['project' => $project]);
 
         return $this->render('project_management/index.html.twig', [
             'controller_name' => 'ProjectManagementController',
             'project' => $project,
+            'tasks' => $tasks,
             'form' => $form,
+            'statusMap' => $statusMap
         ]);
     }
 
-    #[Route('/project/management/alltasks', name: 'project_management_all_tasks', methods: ['GET'])]
-    public function getAllTasksData(TaskRepository $taskRepository, Request $request): Response
-    {
-        $projectId = 2;
-        $tasks = $taskRepository->findBy(['project' => $projectId]);
-        $formattedTasks = $this->formatTasks($tasks);
-
-        return $this->json($formattedTasks);
-    }
-
-    #[Route('/project/management/assignedtasks', name: 'project_management_assigned_tasks', methods: ['GET'])]
-    public function getAssignedTasksData(TaskRepository $taskRepository, Request $request): Response
-    {
-        $userId = $this->getUser()->getId();
-        $projectId = 2;
-
-        $tasks = $taskRepository->findBy(['project' => $projectId, 'assignedUser' => $userId]);
-        $formattedTasks = $this->formatTasks($tasks);
-
-        return $this->json($formattedTasks);
-    }
 
 
 
@@ -108,22 +93,5 @@ class ProjectManagementController extends AbstractController
     {
         return $this->render('project_management/success.html.twig');
     }
-    private function formatTasks($tasks): array
-    {
-        $formattedTasks = [];
 
-        foreach ($tasks as $task) {
-            $formattedTasks[] = [
-                'label' => $task->getTaskName(),
-                'description' => $task->getTaskDescription(),
-                'status' => $task->getTaskStatus(),
-                'assignee' => $task->getAssignedUser()->getUserName(),
-                'due_date' => '14/05/24', // You may need to adjust this
-                'creator' => $task->getTaskCreator()->getUserName(),
-                'id' => $task->getId()
-            ];
-        }
-
-        return $formattedTasks;
-    }
 }
