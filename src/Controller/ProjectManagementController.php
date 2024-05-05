@@ -1,7 +1,9 @@
 <?php
 namespace App\Controller;
 
+use App\Form\CommentType;
 use App\Form\NewTaskFormType;
+use App\Repository\CommentRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,11 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Task;
+use App\Entity\Comment;
 
 class ProjectManagementController extends AbstractController
 {
     #[Route('/project/management', name: 'app_project_management')]
-    public function index(ProjectRepository $projectRepository, TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(ProjectRepository $projectRepository, TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
     {
         $statusMap = [
             0 => 'blocked',
@@ -25,9 +28,11 @@ class ProjectManagementController extends AbstractController
 
         $project = $projectRepository->find(2); // Replace 2 with dynamic project ID
         $task = new Task();
+        $comment = new Comment();
         $form = $this->createForm(NewTaskFormType::class, $task);
-
+        $form2 = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+        $form2->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
             $task->setTaskStatus(0);
@@ -39,15 +44,29 @@ class ProjectManagementController extends AbstractController
 
             return $this->redirectToRoute('add_task_success');
         }
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $comment = $form2->getData();
+            $comment->setAssosiatedUser($this->getUser());
+            $comment->setAssosiatedProject($project);
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('add_comment_success');
+        }
 
         // Fetch project tasks
         $tasks = $taskRepository->findBy(['project' => $project]);
+        //Fetch comments
+        $comments = $commentRepository->findBy(['assosiatedProject' => $project]);
 
         return $this->render('project_management/index.html.twig', [
             'controller_name' => 'ProjectManagementController',
             'project' => $project,
             'tasks' => $tasks,
+            'comments' => $comments,
             'form' => $form,
+            'form2' => $form2,
             'statusMap' => $statusMap
         ]);
     }
@@ -94,4 +113,9 @@ class ProjectManagementController extends AbstractController
         return $this->render('project_management/success.html.twig');
     }
 
+    #[Route('/project/management/add-comment-success', name: 'add_comment_success')]
+    public function commentSuccess(): Response
+    {
+        return $this->render('project_management/commentSuccess.html.twig');
+    }
 }

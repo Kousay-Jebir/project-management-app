@@ -36,6 +36,7 @@ body {
 
     display: flex;
     flex-direction: column;
+
 }
 
 
@@ -268,18 +269,26 @@ td.truncate {
 
 }
 
-.comment-profile-image img {
-    display: block;
-    max-width: 50px;
-    aspect-ratio: 1;
+.comment-profile-image {
+
+    font-weight: bold;
+    color: var(--secondary-text-color);
 }
 
 .comment-card {
     display: flex;
-    justify-content: space-between;
     gap: 1rem;
     margin-block: 1rem;
-    border: 2px solid var(--secondary-text-color);
-    border-radius: 15px;
+    border-bottom: 2px solid var(--secondary-text-color);
     padding: 1rem;
+    color: var(--main-text-color);
+}
+
+#comment_commentText {
+    border-radius: 15px;
+    width: 100%;
+    resize: none;
+    border: none;
+    margin-bottom: 1rem;
+
 }
