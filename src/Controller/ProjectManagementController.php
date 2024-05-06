@@ -6,6 +6,7 @@ use App\Form\NewTaskFormType;
 use App\Repository\CommentRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TaskRepository;
+use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ use App\Entity\Comment;
 class ProjectManagementController extends AbstractController
 {
     #[Route('/project/management', name: 'app_project_management')]
-    public function index(ProjectRepository $projectRepository, TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
+    public function index(ProjectRepository $projectRepository, TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, TeamRepository $teamRepository): Response
     {
         $statusMap = [
             0 => 'blocked',
@@ -25,11 +26,11 @@ class ProjectManagementController extends AbstractController
             2 => 'done',
             3 => 'review'
         ];
-
-        $project = $projectRepository->find(2); // Replace 2 with dynamic project ID
+        $team = $teamRepository->find(4);
+        $project = $projectRepository->find(2);
         $task = new Task();
         $comment = new Comment();
-        $form = $this->createForm(NewTaskFormType::class, $task);
+        $form = $this->createForm(NewTaskFormType::class, $task, ['teamMembers' => $team]);
         $form2 = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         $form2->handleRequest($request);
