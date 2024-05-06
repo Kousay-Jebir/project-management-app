@@ -1,0 +1,17 @@
+<nav class="navbar">
+
+    <a class="navbar-brand" href="{{ path('app_homepage') }}">Home</a>
+
+    {% if app.user %}
+    <div class="navbar-logged-in navbar-item">
+        <div class="navbar-text mr-3">Welcome, {{ app.user.username }}!</div>
+        <a href="{{ path('app_logout') }}">Logout</a>
+    </div>
+    {% else %}
+    <div class="navbar-not-logged-in navbar-item">
+        <a href="{{ path('app_login') }}">Login</a>
+        <a href="{{ path('app_register') }}">Sign Up</a>
+    </div>
+    {% endif %}
+
+</nav>
