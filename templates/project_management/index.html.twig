@@ -72,8 +72,7 @@
             <tr>
                 <td>{{ task.taskName }}</td>
                 <td id="{{task.id}}" class="task-{{ attribute(statusMap, task.taskStatus) }} task-status">
-                    {{ attribute(statusMap, task.taskStatus) }}
-                </td>
+                    {{ attribute(statusMap, task.taskStatus) }}</td>
                 <td class="assigned-user">{{ task.assignedUser.userName }}</td>
                 <td class="truncate">{{ task.taskDescription }}</td>
                 <td>{{ task.taskCreator.userName }}</td>
@@ -106,7 +105,80 @@
 <script src="{{asset('project_management/task_status_management.js')}}"></script>
 {# <script src="{{asset('project_management/project_management_navigation.js')}}"></script> #}
 <script>
+
+
+
     window.onload = function () {
+        const taskRows = document.querySelector('tbody').querySelectorAll("tr");
+        const tasksArray = [];
+
+        taskRows.forEach(taskRow => {
+            const taskStatus = taskRow.querySelector('.task-status').innerHTML.trim();
+            const assignedUser = taskRow.querySelector('.assigned-user').innerHTML;
+            const taskObject = {
+                status: taskStatus,
+                assignedUser: assignedUser
+            };
+            tasksArray.push(taskObject);
+        });
+
+        function pieChartData(tasksArray) {
+            // Initialize counters for each status
+            let blockedCount = 0;
+            let progressCount = 0;
+            let doneCount = 0;
+            let reviewCount = 0;
+
+            // Loop through each task and increment the corresponding counter
+            tasksArray.forEach(task => {
+                switch (task.status.toLowerCase()) {
+                    case 'blocked':
+                        blockedCount++;
+                        break;
+                    case 'progress':
+                        progressCount++;
+                        break;
+                    case 'done':
+                        doneCount++;
+                        break;
+                    case 'review':
+                        reviewCount++;
+                        break;
+                    default:
+                        break;
+                }
+            });
+            return [blockedCount, progressCount, doneCount, reviewCount];
+        }
+
+        function barChartData(tasksArray) {
+            const userTasksCompleted = {};
+            const userTotalTasks = {};
+
+            // Loop through each task
+            tasksArray.forEach(task => {
+                const assignedUser = task.assignedUser.trim(); // Trim to remove leading/trailing whitespace
+
+                // Increment completed tasks count if status is 'done'
+                if (task.status.trim().toLowerCase() === 'done') {
+                    userTasksCompleted[assignedUser] = (userTasksCompleted[assignedUser] || 0) + 1;
+                }
+
+                // Increment total tasks count
+                userTotalTasks[assignedUser] = (userTotalTasks[assignedUser] || 0) + 1;
+            });
+
+            // Extract names (keys) and counts (values) from the objects and convert them to arrays
+            const userNames = Object.keys(userTotalTasks);
+            const tasksCompleted = userNames.map(userName => userTasksCompleted[userName] || 0);
+            const totalTasksAssigned = userNames.map(userName => userTotalTasks[userName]);
+
+            return [userNames, tasksCompleted, totalTasksAssigned];
+        }
+        console.log(barChartData(tasksArray))
+
+
+
         const ctx = document.getElementById('myChart');
         console.log(ctx);
         new Chart(ctx, {
@@ -114,7 +186,7 @@
             data: {
                 labels: ['Blocked', 'In progress', 'Done', 'In review'],
                 datasets: [{
-                    data: [40, 15, 15, 30],
+                    data: pieChartData(tasksArray),
                     backgroundColor: [
                         '#DC646A',
                         '#7F77F1',
@@ -136,10 +208,9 @@
         });
 
 
-        // Sample data - Replace this with your actual data
-        var teamMembers = ["Alice", "Bob", "Charlie", "David"];
-        var tasksCompleted = [5, 12, 3, 12]; // Number of tasks completed by each team member
-        var totalTasks = [10, 15, 8, 12]; // Total tasks assigned to each team member
+        var teamMembers = barChartData(tasksArray)[0];
+        var tasksCompleted = barChartData(tasksArray)[1];
+        var totalTasks = barChartData(tasksArray)[2];
 
         // Calculating progress percentage for each team member
         var progressPercentage = tasksCompleted.map((completed, index) => {

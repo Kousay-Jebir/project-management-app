@@ -119,4 +119,12 @@ class ProjectManagementController extends AbstractController
     {
         return $this->redirect('app_project_management');
     }
+
+    #[Route('/project/management/add-comment-success', name: 'add_comment_success')]
+
+    public function projectStatistics(): Response
+    {
+
+    }
+
 }
