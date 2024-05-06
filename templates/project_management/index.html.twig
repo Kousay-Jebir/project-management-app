@@ -68,7 +68,7 @@
         </thead>
 
         <tbody>
-            {% for task in tasks %}
+            {% for task in tasks | reverse  %}
             <tr>
                 <td>{{ task.taskName }}</td>
                 <td id="{{task.id}}" class="task-{{ attribute(statusMap, task.taskStatus) }} task-status">

@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         [3, 'review']
     ]);
 
-    const updateStatusInDataBase = (taskId, status) => {
+    const updateStatusInDataBase = (task, oldStatus, taskId, status) => {
         const url = `/project/management/update-status/${taskId}`;
         const requestBody = JSON.stringify({ status: status });
         fetch(url, {
@@ -33,6 +33,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
             .then(data => {
 
                 console.log('Data received:', data);
+                task.classList.remove(`task-${oldStatus}`);
+                task.classList.add(`task-${status}`);
+
+                // Move the added class to the beginning
+                const classListArray = Array.from(task.classList);
+                const index = classListArray.indexOf(`task-${status}`);
+                if (index !== -1) {
+                    classListArray.splice(index, 1);
+                    classListArray.unshift(`task-${status}`);
+                    task.className = classListArray.join(' ');
+                }
+                task.innerHTML = status;
             })
             .catch(error => {
 
@@ -47,18 +59,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         const newStatus = statusValues[nextIndex];
 
         console.log(newStatus);
-        task.classList.remove(`task-${oldStatus}`);
-        task.classList.add(`task-${newStatus}`);
-
-        // Move the added class to the beginning
-        const classListArray = Array.from(task.classList);
-        const index = classListArray.indexOf(`task-${newStatus}`);
-        if (index !== -1) {
-            classListArray.splice(index, 1);
-            classListArray.unshift(`task-${newStatus}`);
-            task.className = classListArray.join(' ');
-        }
-        task.innerHTML = newStatus;
         return newStatus
     };
 
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
         const status = clickedElemnt.classList[0].split('-')[1];
         const newStatus = changeTaskStatus(status, clickedElemnt);
-        updateStatusInDataBase(clickedElemnt.id, newStatus);
+        updateStatusInDataBase(clickedElemnt, status, clickedElemnt.id, newStatus);
     };
 
 
