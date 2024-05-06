@@ -1,0 +1,19 @@
+.navbar {
+    background-color: #d9d9d9;
+    position: fixed;
+    width: 100%;
+    top: 0%;
+    left: 0%;
+
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding-block: 1rem;
+    box-shadow: 0 0 6px 3px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+
+.navbar-item {
+    display: flex;
+    gap: 1rem;
+}
