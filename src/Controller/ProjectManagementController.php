@@ -14,20 +14,29 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Task;
 use App\Entity\Comment;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ProjectManagementController extends AbstractController
 {
-    #[Route('/project/management', name: 'app_project_management')]
-    public function index(ProjectRepository $projectRepository, TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, TeamRepository $teamRepository): Response
+    #[Route('/project/management/{teamId}/{projectId}', name: 'app_project_management')]
+    public function index(ProjectRepository $projectRepository, TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, TeamRepository $teamRepository, $teamId, $projectId, AuthorizationCheckerInterface $authorizationChecker): Response
     {
+        $accessGranted = $authorizationChecker->isGranted('ACCESS_TEAM_PROJECT', ['teamId' => $teamId, 'projectId' => $projectId]);
+        if (!$accessGranted) {
+            throw $this->createAccessDeniedException('You are not authorized to access this team or project.');
+        }
+
+        $user = $this->getUser();
+        $team = $teamRepository->find($teamId);
+        $project = $projectRepository->find($projectId);
+
         $statusMap = [
             0 => 'blocked',
             1 => 'progress',
             2 => 'done',
             3 => 'review'
         ];
-        $team = $teamRepository->find(4);
-        $project = $projectRepository->find(2);
+
         $task = new Task();
         $comment = new Comment();
         $form = $this->createForm(NewTaskFormType::class, $task, ['teamMembers' => $team]);
@@ -37,7 +46,7 @@ class ProjectManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
             $task->setTaskStatus(0);
-            $task->setTaskCreator($this->getUser());
+            $task->setTaskCreator($user);
             $task->setProject($project);
 
             $entityManager->persist($task);
@@ -47,7 +56,7 @@ class ProjectManagementController extends AbstractController
         }
         if ($form2->isSubmitted() && $form2->isValid()) {
             $comment = $form2->getData();
-            $comment->setAssosiatedUser($this->getUser());
+            $comment->setAssosiatedUser($user);
             $comment->setAssosiatedProject($project);
             $comment->setCommentDate(new \DateTimeImmutable());
 
