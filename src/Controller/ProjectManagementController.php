@@ -108,6 +108,29 @@ class ProjectManagementController extends AbstractController
         // Return a success response
         return new Response(Response::HTTP_OK);
     }
+
+    #[Route('/project/management/delete-task/{taskId}', name: 'delete_task', methods: ['DELETE'])]
+    public function deleteTask(TaskRepository $taskRepository, Request $request, $taskId, EntityManagerInterface $entityManager): Response
+    {
+        // Find the task by ID
+        $task = $entityManager->getRepository(Task::class)->find($taskId);
+        dump($task);
+        // If task not found, return 404 Not Found response
+        if (!$task) {
+            return new Response('Task not found', Response::HTTP_NOT_FOUND);
+        }
+
+        $currentUser = $this->getUser();
+        if ($task->getTaskCreator() !== $currentUser) {
+            return new Response('Forbidden: You are not allowed to delete this task.', Response::HTTP_FORBIDDEN);
+        }
+        // Update the status
+        $entityManager->remove($task);
+        $entityManager->flush();
+
+        // Return a success response
+        return new Response(Response::HTTP_OK);
+    }
     #[Route('/project/management/add-task-success', name: 'add_task_success')]
     public function taskSuccess(): Response
     {
@@ -120,11 +143,7 @@ class ProjectManagementController extends AbstractController
         return $this->redirect('app_project_management');
     }
 
-    #[Route('/project/management/add-comment-success', name: 'add_comment_success')]
 
-    public function projectStatistics(): Response
-    {
 
-    }
 
 }

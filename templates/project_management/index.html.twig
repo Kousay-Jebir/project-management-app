@@ -76,6 +76,7 @@
                 <td class="assigned-user">{{ task.assignedUser.userName }}</td>
                 <td class="truncate">{{ task.taskDescription }}</td>
                 <td>{{ task.taskCreator.userName }}</td>
+                <td><button data-task-id="{{task.id}}"></button></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -103,7 +104,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="{{asset('project_management/script.js')}}"></script>
 <script src="{{asset('project_management/task_status_management.js')}}"></script>
-{# <script src="{{asset('project_management/project_management_navigation.js')}}"></script> #}
+<script src="{{asset('project_management/delete_task.js')}}"></script>
+
 <script>
 
 
