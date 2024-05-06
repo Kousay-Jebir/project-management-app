@@ -300,3 +300,7 @@ td.truncate {
     font-family: inherit;
 
 }
+
+.delete-task {
+    cursor: pointer;
+}

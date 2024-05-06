@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     document.querySelector(".task-table").addEventListener('click', (event) => {
-        if (event.target.tagName != "BUTTON") {
+        if (!(event.target.classList.contains("delete-task"))) {
             return
         }
         const taskId = event.target.dataset.taskId;
