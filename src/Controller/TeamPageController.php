@@ -9,7 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\TeamRepository;
-use App\Repository\TaskRepository;
+use App\Repository\ProjectRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 class TeamPageController extends AbstractController
@@ -32,10 +33,44 @@ class TeamPageController extends AbstractController
         ]);
     }
     #[Route('/TeamPage/{id}/overview', name: 'team_page_overview', methods: ['GET'])]
-    public function getOverviewData(TeamRepository $teamRepository, Request $request,$id): Response
+    public function getOverviewData(TeamRepository $teamRepository, Request $request,$id, ): Response
     {   
         $team=$teamRepository->findOneBy(['id'=>$id]);
         return $this->json(['teamDescription'=>$team->getTeamDescription()]);
     }
+
+    #[Route('/TeamPage/{id}/projects', name: 'team_page_projects', methods: ['GET'])]
+    public function getProjectsData(ProjectRepository $projectRepository, Request $request,$id): Response
+    {   
+       $projects=$projectRepository->findBy(['team'=>$id]);
+       $projectsData=[];
+       foreach ($projects as $project) {
+        $projectsData[] = [
+            'project_id' => $project->getId(),
+            'projectName' => $project->getProjectName(),
+            'description' => $project->getProjectDescription(),
+            
+        ];
+    }
+        return $this->json($projectsData);
+    }
+    #[Route('/TeamPage/{id}/members', name: 'team_page_members', methods: ['GET'])]
+    public function getUsersData(UserRepository $userRepository, Request $request,$id): Response
+    {   
+       $users=$userRepository->findBy(['team'=>$id]);
+       $usersData=[];
+       foreach ($users as $user) {
+        $usersData[] = [
+            'user_id' => $user->getId(),
+            'userName' => $user->getUserName(),
+            'role' => $user->getRoles(),
+            
+        ];
+    }
+        return $this->json($usersData);
+    }
+
+
+
    
 }
