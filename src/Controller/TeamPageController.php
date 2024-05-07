@@ -36,13 +36,19 @@ class TeamPageController extends AbstractController
     public function getOverviewData(TeamRepository $teamRepository, Request $request,$id, ): Response
     {   
         $team=$teamRepository->findOneBy(['id'=>$id]);
-        return $this->json(['teamDescription'=>$team->getTeamDescription()]);
+        $projects=$team->getProjects()->toArray();
+        $current_project=($projects[count($projects)-1])->getProjectName();
+        $users=$team->getUsers()->toArray();
+        $user=$this->getUser();
+        $tasks=$user->getAssignedTask()->toArray();
+        return $this->json(['teamDescription'=>$team->getTeamDescription(), 'nb_projects'=>count($projects), 'current_project'=> $current_project, 'nb_members'=>count($users), 'nb_tasks'=>count($tasks), ]);
     }
 
     #[Route('/TeamPage/{id}/projects', name: 'team_page_projects', methods: ['GET'])]
-    public function getProjectsData(ProjectRepository $projectRepository, Request $request,$id): Response
+    public function getProjectsData(TeamRepository $teamRepository, Request $request,$id): Response
     {   
-       $projects=$projectRepository->findBy(['team'=>$id]);
+        $team=$teamRepository->findOneBy(['id'=>$id]);
+        $projects=$team->getProjects()->toArray();
        $projectsData=[];
        foreach ($projects as $project) {
         $projectsData[] = [
@@ -55,9 +61,10 @@ class TeamPageController extends AbstractController
         return $this->json($projectsData);
     }
     #[Route('/TeamPage/{id}/members', name: 'team_page_members', methods: ['GET'])]
-    public function getUsersData(UserRepository $userRepository, Request $request,$id): Response
+    public function getUsersData(TeamRepository $teamRepository, Request $request,$id): Response
     {   
-       $users=$userRepository->findBy(['team'=>$id]);
+        $team=$teamRepository->findOneBy(['id'=>$id]);
+        $users=$team->getUsers()->toArray();
        $usersData=[];
        foreach ($users as $user) {
         $usersData[] = [

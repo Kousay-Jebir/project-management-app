@@ -114,7 +114,8 @@
 }
 .team-current-tasks{
     height: 50vh;
-    width: 30vw;
+    width: 25vw;
+    padding: 0px 20px;
     background-color: aquamarine;
     border-radius: 20px;
     display: flex;
@@ -122,13 +123,12 @@
     align-items: center;
     gap: 5px;
 }
-.task-component{
-    
-    font-size: 18px;
-    background-color: aqua;
-    width: 85%;
-    padding: 20px;
-}
+table, th, td {
+    border: 1px solid black;
+  }
+th ,td{
+    padding:10px
+  }
 .description-text{
     font-size: 20px;
 }

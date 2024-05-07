@@ -15,13 +15,42 @@ async function showOverview(){
        <p style="font-size: 20px;" id="description"></p>
    </div>
    <div class="team-current-tasks">
-       <h1>Current Tasks:</h1>
-       <li class="task-component">
-           ourhfrzi
-       </li>
+   <h1>Team Statistics:</h1>
+   <table style="width:100%" class="task-component">
+       <tr>
+         <th>members</th>
+         <td id="nb_members"></td>
+       </tr>
+       <tr>
+         <th>projects</th>
+         <td id="nb_projects"></td>
+       </tr>
+       <tr>
+           <th>current project</th>
+           <td id="current_project"></td>
+       </tr>
+     </table>
+
+     <h1>MySpace:</h1>
+     <table style="width:100%" class="task-component">
+         <tr>
+           <th>role within the team</th>
+           <td>manager</td>
+         </tr>
+         <tr>
+           <th>tasks</th>
+           <td id="nb_tasks"></td>
+         </tr>
+         
+       </table>
    </div>
  </div>`
- await fetchData(id,"overview").then(data=>{document.getElementById("description").innerHTML=data.teamDescription})
+ await fetchData(id,"overview").then(data=>{document.getElementById("description").innerHTML=data.teamDescription;
+ document.getElementById("nb_members").innerHTML=data.nb_members
+ document.getElementById("nb_projects").innerHTML=data.nb_projects
+ document.getElementById("nb_tasks").innerHTML=data.nb_tasks
+ document.getElementById("current_project").innerHTML=data.current_project
+ })
  document.getElementById("overview-content").classList.remove("hidden")
 }
 function showProjects(){
