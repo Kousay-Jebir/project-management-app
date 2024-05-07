@@ -16,7 +16,8 @@
 }
 
 li,
-ul {
+ul,
+p {
     padding: 0;
     margin: 0;
 }
@@ -27,12 +28,21 @@ a {
 }
 
 body {
-    margin: 0;
+    margin: 3rem 0;
     padding: 0 5rem;
 
     font-family: "inter";
     box-sizing: content-box;
+
+    display: flex;
+    flex-direction: column;
+
 }
+
+
+
+
+
 
 .br-15 {
     border-radius: 15px;
@@ -40,34 +50,30 @@ body {
 
 .task-done {
     background-color: var(--task-done);
-    color: var(--main-background-color);
-    border-radius: 5px;
-    text-align: center;
-    font-size: 0.75rem;
-    width: 0;
-
 }
 
 .task-blocked {
     background-color: var(--task-blocked);
-    color: var(--main-background-color);
-    border-radius: 5px;
-    text-align: center;
-    font-size: 0.75rem;
-    width: 0;
+
 }
 
 .task-review {
     background-color: var(--task-review);
-    color: var(--main-background-color);
-    border-radius: 5px;
-    text-align: center;
-    width: 0;
-    font-size: 0.75rem;
+
 }
 
 .task-progress {
     background-color: var(--task-progress);
+
+}
+
+.task-status:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+
+}
+
+.task-status {
     color: var(--main-background-color);
     border-radius: 5px;
     text-align: center;
@@ -77,17 +83,13 @@ body {
 
 .project-management-nav {
     background-color: var(--secondary-background-color);
+    color: var(--main-text-color);
     list-style-type: none;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     padding: 1.75rem 0rem;
-    gap: 9rem;
     margin-block: 1rem;
 
-}
-
-.project-management-nav {
-    color: var(--main-text-color);
 }
 
 .active {
@@ -107,48 +109,16 @@ body {
 
 }
 
-.task-table th {
-    font-weight: 500;
-    color: var(--secondary-text-color);
-}
-
-.task-table {
-    width: 100%;
-}
-
-.task-table,
-th,
-td {
-    border-collapse: collapse;
-}
-
-/* .task-table tbody tr {
-    color: var(--main-text-color);
-    border-bottom: 1px solid #B7B7B7;
-    text-align: center;
-} */
-
-td {
-    border-bottom: 1px solid #b7b7b7;
-    text-align: center;
-    color: var(--main-text-color);
-}
-
-th,
-td {
+.project-management-dashboard {
+    display: flex;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: var(--secondary-background-color);
+    margin-top: 1rem;
     padding: 1rem;
 }
 
-.task-management {
-    background-color: var(--secondary-background-color);
-    padding: 2rem;
-}
 
-.task-management input[type="search"] {
-    border-radius: 1rem;
-    padding: 0.3rem 3rem;
-    border: none;
-}
 
 #add-task {
     background-color: var(--accent-background-color);
@@ -158,11 +128,179 @@ td {
     color: var(--main-background-color);
 }
 
-#filter {
-    background-color: var(--main-background-color);
-    border: none;
-    background-color: var(--main-background-color);
-    border-radius: 1rem;
-    padding: 0.5rem 1rem;
+
+
+#project-overview.project-overview.visible {
+
+    background-color: #f6f6f6;
+    gap: 1rem;
+    padding: 1rem;
+    /* margin-top: 1rem; */
+    display: flex;
+}
+
+
+
+
+.chart-container {
+
+    height: 300px;
+    width: 300px;
+}
+
+.project-info {
+    border-radius: 15px;
     color: var(--main-text-color);
+
+}
+
+.project-info h2 {
+    color: var(--secondary-text-color);
+}
+
+.add-task-form {
+    background-color: var(--secondary-background-color);
+
+    border-radius: 15px;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row input,
+.form-row select {
+    border: none;
+    border-radius: 15px;
+    padding-block: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.form-row label {
+    color: var(--main-text-color);
+}
+
+form button {
+    display: block;
+    padding: 0.4rem 2rem;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--accent-background-color);
+    color: var(--main-background-color);
+}
+
+/* Apply truncation to cells with the 'truncate' class */
+td.truncate {
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 5px;
+    position: absolute;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+
+.project-management-dashboard>* {
+    display: none;
+}
+
+.project-management-dashboard>.visible {
+    display: block;
+}
+
+.task-table {
+
+    border-collapse: separate;
+    border-spacing: 1rem;
+    background-color: #f6f6f6;
+    border-radius: 15px;
+    /* margin-top: 1rem; */
+}
+
+.task-table th,
+.task-table td {
+    padding: 1rem;
+
+    border-bottom: 1px solid #ddd;
+
+    text-align: center;
+}
+
+.task-table th {
+
+    color: var(--secondary-text-color);
+    /* Set text color for table headers */
+    font-weight: bold;
+    /* Make table headers bold */
+}
+
+.chat-room {
+    background-color: #f6f6f6;
+    border-radius: 15px;
+    /* margin-top: 1rem; */
+    width: 70%;
+    padding: 1rem;
+
+}
+
+.comment-profile-image {
+
+    font-weight: bold;
+    color: var(--secondary-text-color);
+}
+
+.comment-card {
+    display: flex;
+    gap: 1rem;
+    margin-block: 1rem;
+    /* border-bottom: 2px solid var(--secondary-text-color); */
+    border-radius: 2rem;
+    background-color: #b9dddf;
+    padding: 1rem;
+    color: var(--main-text-color);
+}
+
+#comment_commentText {
+    border-radius: 15px;
+    width: 75%;
+    resize: none;
+    border: none;
+    margin-bottom: 1rem;
+    font-size: inherit;
+    font-family: inherit;
+
+}
+
+.delete-task {
+    cursor: pointer;
 }

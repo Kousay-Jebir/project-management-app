@@ -1,26 +1,60 @@
-{% extends 'base.html.twig'%}
+{% extends '/project_management/base.html.twig'%}
 
 {% block title %}project management{% endblock %}
 
-{% block body %}<ul class="project-management-nav br-15">
-    <li class="project-management-nav-item"><a class="active" href="#">project overview</a></li>
-    <li class="project-management-nav-item"><a href="#">all tasks</a></li>
-    <li class="project-management-nav-item"><a href="#">assigned tasks</a></li>
-    <li class="project-management-nav-item"><a href="#">chat room</a></li>
+{% block body %}
+{{ include('nav_bar.html.twig') }}
+<ul class="project-management-nav br-15">
+    <li class="project-management-nav-item"><a class="active" href="#" data-section="project-overview">project
+            overview</a></li>
+    <li class="project-management-nav-item"><a href="#" id="all-tasks" data-section="task-table">all tasks</a></li>
+    <li class="project-management-nav-item"><a href="#" data-section="task-table" data-user="{{app.user.userName}}"
+            id="assigned-tasks-link">assigned tasks</a></li>
+    <li class="project-management-nav-item"><a href="#" data-section="chat-room">chat room</a></li>
 </ul>
 
+{{ form_start(form, { 'attr': {'class': 'add-task-form', 'name': ''} }) }}
+<div class="form-error">
+    {{ form_errors(form) }}
+</div>
+
+<div class="form-row">
+    {{ form_row(form.taskName, {'label': 'Task label'}) }}
+    {{ form_row(form.taskDescription, {'label': 'Description'}) }}
+    {{ form_row(form.assignedUser, {'label': 'Assignee'}) }}
+</div>
+{{ form_end(form) }}
+
+
+
 <section class="project-management-dashboard">
-    <form action="" method="get" class="task-management br-15">
-        <button id="filter" type="button">filter</button>
-        <input type="search" name="" id="">
-        <button type="submit">Search</button>
-        <button id="add-task" type="button">Add a new task</button>
-    </form>
 
-    <div>
-        <canvas id="myChart"></canvas>
+
+
+
+    <div id="project-overview" class="project-overview br-15 visible">
+
+        <div class="chart-container">
+            <canvas height="300px" id="myChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas height="300px" id="progressChart"></canvas>
+        </div>
+
+        <div class="project-info">
+            <div>
+                <h2>Project name</h2>
+                <p>{{project.projectName}}</p>
+            </div>
+            <div>
+                <h2>Project description</h2>
+                <p>{{project.projectDescription}}</p>
+            </div>
+
+        </div>
+
     </div>
-
 
     <table class="task-table">
 
@@ -29,14 +63,45 @@
                 <th>task label</th>
                 <th>status</th>
                 <th>assignee</th>
-                <th>due date</th>
+                <th>task description</th>
                 <th>task creator</th>
             </tr>
         </thead>
-        <tbody>
 
+        <tbody>
+            {% for task in tasks | reverse  %}
+            <tr>
+                <td>{{ task.taskName }}</td>
+                <td id="{{task.id}}" class="task-{{ attribute(statusMap, task.taskStatus) }} task-status">
+                    {{ attribute(statusMap, task.taskStatus) }}</td>
+                <td class="assigned-user">{{ task.assignedUser.userName }}</td>
+                <td class="truncate">{{ task.taskDescription }}</td>
+                <td>{{ task.taskCreator.userName }}</td>
+                <td data-task-id="{{task.id}}" class="delete-task">
+                    <svg data-task-id="{{task.id}}" class="delete-task" xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#cccccc">
+                        <path
+                            d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                    </svg>
+                </td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
+
+    <div class="chat-room">
+        {% for comment in comments %}
+        <div class="comment-card">
+            <div class="comment-profile-image">{{comment.assosiatedUser.userName}}</div>
+            <p class="comment-text">{{comment.commentText}}</p>
+            <span>{{comment.commentDate |date('Y-m-d H:i')}}</span>
+        </div>
+        {% endfor %}
+        {{ form_start(form2) }}
+        {{ form_widget(form2) }}
+        <button class="btn">{{ button_label|default('Send') }}</button>
+        {{ form_end(form2) }}
+    </div>
 
 </section>
 {% endblock %}
@@ -45,25 +110,157 @@
 {{ parent() }}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="{{asset('project_management/script.js')}}"></script>
+<script src="{{asset('project_management/task_status_management.js')}}"></script>
+<script src="{{asset('project_management/delete_task.js')}}"></script>
 
 <script>
+
+
+
     window.onload = function () {
+        const taskRows = document.querySelector('tbody').querySelectorAll("tr");
+        const tasksArray = [];
+
+        taskRows.forEach(taskRow => {
+            const taskStatus = taskRow.querySelector('.task-status').innerHTML.trim();
+            const assignedUser = taskRow.querySelector('.assigned-user').innerHTML;
+            const taskObject = {
+                status: taskStatus,
+                assignedUser: assignedUser
+            };
+            tasksArray.push(taskObject);
+        });
+
+        function pieChartData(tasksArray) {
+            // Initialize counters for each status
+            let blockedCount = 0;
+            let progressCount = 0;
+            let doneCount = 0;
+            let reviewCount = 0;
+
+            // Loop through each task and increment the corresponding counter
+            tasksArray.forEach(task => {
+                switch (task.status.toLowerCase()) {
+                    case 'blocked':
+                        blockedCount++;
+                        break;
+                    case 'progress':
+                        progressCount++;
+                        break;
+                    case 'done':
+                        doneCount++;
+                        break;
+                    case 'review':
+                        reviewCount++;
+                        break;
+                    default:
+                        break;
+                }
+            });
+            return [blockedCount, progressCount, doneCount, reviewCount];
+        }
+
+        function barChartData(tasksArray) {
+            const userTasksCompleted = {};
+            const userTotalTasks = {};
+
+            // Loop through each task
+            tasksArray.forEach(task => {
+                const assignedUser = task.assignedUser.trim(); // Trim to remove leading/trailing whitespace
+
+                // Increment completed tasks count if status is 'done'
+                if (task.status.trim().toLowerCase() === 'done') {
+                    userTasksCompleted[assignedUser] = (userTasksCompleted[assignedUser] || 0) + 1;
+                }
+
+                // Increment total tasks count
+                userTotalTasks[assignedUser] = (userTotalTasks[assignedUser] || 0) + 1;
+            });
+
+            // Extract names (keys) and counts (values) from the objects and convert them to arrays
+            const userNames = Object.keys(userTotalTasks);
+            const tasksCompleted = userNames.map(userName => userTasksCompleted[userName] || 0);
+            const totalTasksAssigned = userNames.map(userName => userTotalTasks[userName]);
+
+            return [userNames, tasksCompleted, totalTasksAssigned];
+        }
+        console.log(barChartData(tasksArray))
+
+
+
         const ctx = document.getElementById('myChart');
         console.log(ctx);
         new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Blocked', 'In progress', 'Done', 'In review'],
+                datasets: [{
+                    data: pieChartData(tasksArray),
+                    backgroundColor: [
+                        '#DC646A',
+                        '#7F77F1',
+                        '#33A069',
+                        '#F9BE33'
+                    ],
+                    borderColor: '#f6f6f6'
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+
+            }
+
+        });
+
+
+        var teamMembers = barChartData(tasksArray)[0];
+        var tasksCompleted = barChartData(tasksArray)[1];
+        var totalTasks = barChartData(tasksArray)[2];
+
+        // Calculating progress percentage for each team member
+        var progressPercentage = tasksCompleted.map((completed, index) => {
+            return (completed / totalTasks[index]) * 100;
+        });
+
+        // Chart.js code
+        var ctx2 = document.getElementById('progressChart');
+        var progressChart = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: teamMembers,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: progressPercentage,
+                    backgroundColor: '#3C6E7180',
+                    borderColor: '#284B63',
                     borderWidth: 1
                 }]
             },
             options: {
                 scales: {
-                    y: {
-                        beginAtZero: true
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Progress Percentage (%)'
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Team Members'
+                        }
+                    }]
+                },
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 }
             }

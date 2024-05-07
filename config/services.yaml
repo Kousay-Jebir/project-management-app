@@ -19,6 +19,10 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    
+
+    App\Security\ProjectManagementVoter:
+        tags: [security.voter]
 
     # add more service definitions when explicit configuration is needed
     
