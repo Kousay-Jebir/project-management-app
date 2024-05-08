@@ -59,11 +59,17 @@ content.innerHTML=` <div id="projects-container" class="projects-container">
 </div>`
 let projects= await fetchData(id,"projects");
 generateProjects(projects,id);
-document.getElementById("overview-content").classList.remove("hidden")
+
  }
 async function showMembers(){
-    content.innerHTML=`<div>Members</div>`
- }
+  let id=document.getElementById("team_id").innerText;
+  content.innerHTML=` <div id="members-container" class="members-container">
+  </div>`
+  let members= await fetchData(id,"members");
+  generateMembers(members);
+
+   }
+ 
  async function fetchData(id,action) {
    const url = `/TeamPage/${id}/${action}`;
    return fetch(url, {
@@ -89,6 +95,18 @@ function generateProjects(projects,id){
     <h1 id="project-name" class="project-name">${project.projectName}</h1>
     <p id="project-description" class="project-description">${project.description}</p>
     <a href="/project/management/${id}/${project.project_id}"><button class="project-button">View Project</button></a>
+</div>`
+  });
+
+}
+function generateMembers(members){
+
+ 
+  let container=document.getElementById("members-container")
+  members.forEach(member => {
+    container.innerHTML+=`<div class="member-component">
+    <h1>${member.userName}</h1>
+    <p style="text-align: center;"><span style="font-size: 20px;">Email:     </span>${member.email}</p>
 </div>`
   });
 

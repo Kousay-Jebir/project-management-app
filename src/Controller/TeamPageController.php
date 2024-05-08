@@ -70,7 +70,7 @@ class TeamPageController extends AbstractController
         $usersData[] = [
             'user_id' => $user->getId(),
             'userName' => $user->getUserName(),
-            'role' => $user->getRoles(),
+            'email' => $user->getEmail(),
             
         ];
     }
