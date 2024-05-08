@@ -38,7 +38,7 @@ class CreateTeamController extends AbstractController
                 $team->addUser($user);
 
                 $entityManager->flush();
-                return $this->redirectToRoute('app_homepage');}
+                return $this->redirectToRoute('app_mainpage');}
             else{
                 return $this->render('create_team/index.html.twig', [
                     'form' => $form,
