@@ -32,6 +32,7 @@ class MainpageController extends AbstractController
             return $this->render('mainpage/index.html.twig', [
                 'controller_name' => 'MainpageController',
                 'teams'=>$teams,
+                'nb'=>count($teams)
             ]);
             
         } else {
