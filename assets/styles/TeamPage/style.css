@@ -135,3 +135,45 @@ th ,td{
 .hidden {
     display: none;
 }
+.projects-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap:50px;
+    justify-content: center;
+}
+.project-component{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 30vw;
+    background-color:darksalmon;
+    padding: 10px;
+    border-radius: 20px;
+    transition: all 0.5s;
+}
+.project-component:hover{
+    scale: 105%;
+}
+.project-button{
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 15px;
+    background-color: brown;
+    color:white
+}
+.project-button:hover{
+    scale: 102%;
+}
+
+.member-component{
+    display: flex;
+    background-color: cornflowerblue;
+    width: 50VW;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 20px;
+    margin-bottom: 10px;
+
+}

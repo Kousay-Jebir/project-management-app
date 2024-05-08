@@ -53,14 +53,18 @@ async function showOverview(){
  })
  document.getElementById("overview-content").classList.remove("hidden")
 }
-function showProjects(){
-    content.innerHTML=`<div>Projects</div>`
+async function showProjects(){
+let id=document.getElementById("team_id").innerText;
+content.innerHTML=` <div id="projects-container" class="projects-container">
+</div>`
+let projects= await fetchData(id,"projects");
+generateProjects(projects,id);
+document.getElementById("overview-content").classList.remove("hidden")
  }
- function showMembers(){
+async function showMembers(){
     content.innerHTML=`<div>Members</div>`
  }
  async function fetchData(id,action) {
-
    const url = `/TeamPage/${id}/${action}`;
    return fetch(url, {
        method: 'GET',
@@ -70,9 +74,22 @@ function showProjects(){
    })
        .then(response => {
            if (!response.ok) {
-               throw new Error('Failed to fetch tasks');
+               throw new Error('Failed to fetch data');
            }
-           console.log(response)
+           
            return response.json();
        });
+}
+function generateProjects(projects,id){
+
+  console.log(projects)
+  let container=document.getElementById("projects-container")
+  projects.forEach(project => {
+    container.innerHTML+=`<div class="project-component">
+    <h1 id="project-name" class="project-name">${project.projectName}</h1>
+    <p id="project-description" class="project-description">${project.description}</p>
+    <a href="/project/management/${id}/${project.project_id}"><button class="project-button">View Project</button></a>
+</div>`
+  });
+
 }
