@@ -22,7 +22,7 @@
 .team-page-structure{
 
     width: 100%;
-    height: 300vh;
+
     display: flex;
 
 }
@@ -97,4 +97,83 @@
 .swiper-button:hover{
     scale: 102%;
     border-bottom: solid rgb(45, 182, 255) 10px;
+}
+.overview-content{
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 30px;
+}
+.team-description{
+    height: 30vh;
+    width: 40vw;
+    border-radius: 20px;
+    background-color: aquamarine;
+    padding: 20px;
+}
+.team-current-tasks{
+    height: 50vh;
+    width: 25vw;
+    padding: 0px 20px;
+    background-color: aquamarine;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+table, th, td {
+    border: 1px solid black;
+  }
+th ,td{
+    padding:10px
+  }
+.description-text{
+    font-size: 20px;
+}
+.hidden {
+    display: none;
+}
+.projects-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap:50px;
+    justify-content: center;
+}
+.project-component{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 30vw;
+    background-color:darksalmon;
+    padding: 10px;
+    border-radius: 20px;
+    transition: all 0.5s;
+}
+.project-component:hover{
+    scale: 105%;
+}
+.project-button{
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 15px;
+    background-color: brown;
+    color:white
+}
+.project-button:hover{
+    scale: 102%;
+}
+
+.member-component{
+    display: flex;
+    background-color: cornflowerblue;
+    width: 50VW;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 20px;
+    margin-bottom: 10px;
+
 }
