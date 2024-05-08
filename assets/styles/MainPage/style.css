@@ -1,14 +1,12 @@
-.team-container{
-    width: 80%;
-    margin-left: 100px ;
-    
-}
 
 .team-member{
-    width: 100%;
+    position: relative;
+    width: 90%;
+
+   
     height: 200px;
-    margin: 20px;
-    border: 2px solid black;
+    margin-bottom: 20px;
+    border: 2px solid rgb(250, 1, 1);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -16,6 +14,7 @@
     align-items: center;
     padding: 10px;
     opacity: 50%;
+    background-color: rgb(227, 225, 225);
 
 }
 a{
@@ -23,15 +22,15 @@ a{
     color: black;
 }
 .team-member:hover{
-    background-color: rgb(227, 225, 225);
-    opacity: 80%;
+    
+    opacity: 100%;
 }
 a:hover{
     color:black;
 }
 #buttons-container{
     display: flex;
-    width: 800px;
+    
     align-items: center;
     justify-content: space-between;
     margin-left:250px ;
@@ -40,7 +39,75 @@ a:hover{
 }
 .button{
     height: 40px;
-    width: 200px;
+    width: 1000px;
     border: black solid 1px;
     border-radius:4px ;
+    opacity: 50%;
+    margin-bottom: 20px;
+}
+.button:hover{
+    opacity: 100%;
+    color: black;
+    background-color:rgb(1, 206, 1) ;
+}
+a:hover h1{
+    color: red;
+}
+#content-container{
+    display: flex;
+    justify-content: space-between;
+    width: 1902px;
+    height: fit-content;
+    /* background-color: brown; */
+    position: absolute;
+    left: 0;
+    top: 100px;
+}
+#side-bar{
+    width: 300px;
+    height: 80vh ;
+    background-color: rgb(232, 231, 231);
+    border: rgb(255, 5, 5) solid 1px;
+    border-radius: 4px ;
+    margin-left:20px ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    justify-content: space-around; 
+
+}
+.team-container{
+    width: 1500px;
+    height: fit-content;
+    /* background-color: aqua; */
+}
+#main-container{
+    display: flex;
+    flex-direction: column;
+    width: 1500px;
+    height: fit-content;
+    /* background-color: blueviolet; */
+    justify-content: center;
+    align-items: center;
+}
+
+#buttons-container{
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+    position: relative;
+    
+    justify-content: center;
+    align-items: center;
+    /* background-color: bisque; */
+    left: -200px;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 400px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
 }

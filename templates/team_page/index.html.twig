@@ -12,8 +12,9 @@
             <h1>Team Code</h1>
             <p style="font-size: 20px;" id="team-code">{{team.getTeamJoinCode}}</p>
         </div>
-        <div class="team-leader-component" id="team-leader">
-        Team Leader:<br/>{{leader.getUserName}}</div>
+        <div class="team-leader-component" id="team-leader">{{leader.getUserName}}</div>
+        <a href="{{ path('app_create_project', {id: team.getId()}) }}" ><button class="button">Create Project</button></a> 
+
     </div>
     <div class="main-departement">
     <div class="swiper">
