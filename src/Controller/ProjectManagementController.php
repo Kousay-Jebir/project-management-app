@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class ProjectManagementController extends AbstractController
 {
-    #[Route('/project/management/{teamId}/{projectId}', name: 'app_project_management')]
+    #[Route('/project/management/{teamId}/{projectId}', name: 'app_project_management', requirements: ['teamId' => '\d+', 'projectId' => '\d+'])]
     public function index(ProjectRepository $projectRepository, TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, TeamRepository $teamRepository, $teamId, $projectId, AuthorizationCheckerInterface $authorizationChecker): Response
     {
         $accessGranted = $authorizationChecker->isGranted('ACCESS_TEAM_PROJECT', ['teamId' => $teamId, 'projectId' => $projectId]);
@@ -85,7 +85,7 @@ class ProjectManagementController extends AbstractController
 
 
 
-    #[Route('/project/management/update-status/{taskId}', name: 'update_task_status', methods: ['PATCH'])]
+    #[Route('/project/management/update-status/{taskId}', name: 'update_task_status', methods: ['PATCH'], requirements: ['taskId' => '\d+'])]
     public function updateTaskStatus(TaskRepository $taskRepository, Request $request, $taskId, EntityManagerInterface $entityManager): Response
     {
 
@@ -119,7 +119,7 @@ class ProjectManagementController extends AbstractController
         return new Response(Response::HTTP_OK);
     }
 
-    #[Route('/project/management/delete-task/{taskId}', name: 'delete_task', methods: ['DELETE'])]
+    #[Route('/project/management/delete-task/{taskId}', name: 'delete_task', methods: ['DELETE'], requirements: ['taskId' => '\d+'])]
     public function deleteTask(TaskRepository $taskRepository, Request $request, $taskId, EntityManagerInterface $entityManager): Response
     {
         // Find the task by ID
