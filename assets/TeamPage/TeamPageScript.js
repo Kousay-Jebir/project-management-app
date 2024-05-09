@@ -4,6 +4,8 @@ let projectsButton=document.getElementById("projects-button");
 let overviewButton=document.getElementById("overview-button");
 let content=document.getElementById("content")
 
+
+showOverview();
 membersButton.addEventListener('click',showMembers)
 projectsButton.addEventListener('click',showProjects)
 overviewButton.addEventListener('click',showOverview)
@@ -105,8 +107,10 @@ function generateMembers(members){
   let container=document.getElementById("members-container")
   members.forEach(member => {
     container.innerHTML+=`<div class="member-component">
-    <h1>${member.userName}</h1>
+    <h2>${member.userName}</h2>
+    <div class="email-thingy">
     <p style="text-align: center;"><span style="font-size: 20px;">Email:     </span>${member.email}</p>
+    </div>
 </div>`
   });
 

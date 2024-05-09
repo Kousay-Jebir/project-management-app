@@ -1,20 +1,25 @@
 .header{
     width:100%;
     height:7vh;
-    background-color: rgb(208, 255, 255);
+    background-color: rgb(255, 228, 202);
     top:0;
     position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap:30px;
 }
 .team-header{
     width:100%;
     height:25vh;
-    background-color: rgb(192, 255, 254);
+    background-color: rgb(255, 242, 207);
     border-radius: 0px 0px 20px 20px;
     top:16vh;
     position: sticky;
     font-size: 80px;
     display: flex;
     align-items: end;
+  
     
     
 
@@ -30,7 +35,7 @@
     width:20%;
     height:92vh;
     border-radius: 0px 20px 20px 0px;
-    background-color: rgb(211, 211, 211);
+    background-color: rgb(255, 202, 146);
     top:7vh;
     position: sticky;
     display: flex;
@@ -42,7 +47,7 @@
 }
 .team-code-component{
     width:80%;
-    background-color: rgb(220, 244, 255);
+    background-color: rgb(255, 248, 220);
     height:30%;
     border-radius: 20px;
     display: flex;
@@ -54,7 +59,7 @@
 }
 .team-leader-component{
     width:80%;
-    background-color: rgb(211, 242, 255);
+    background-color: rgb(255, 254, 208);
     height:10vh;
     border-radius: 20px;
     font-size: 25px;
@@ -67,7 +72,7 @@
     
 }
 .swiper{
-    background-color: white;
+    background-color: rgb(255, 195, 126);
     width: 100%;
     height: 10vh;
     top:7vh;
@@ -88,15 +93,15 @@
     border: none;
     outline: none;
     box-shadow: none;
-    background-color: rgb(102, 255, 247);
+    background-color:rgb(255, 171, 45);
     border-radius: 10PX;
     font-size: 30PX;
-
+    color:aliceblue
     
 }
 .swiper-button:hover{
     scale: 102%;
-    border-bottom: solid rgb(45, 182, 255) 10px;
+    border-bottom: solid rgb(255, 119, 0) 10px;
 }
 .overview-content{
     display: flex;
@@ -109,14 +114,14 @@
     height: 30vh;
     width: 40vw;
     border-radius: 20px;
-    background-color: aquamarine;
+    background-color: rgb(199, 199, 199);
     padding: 20px;
 }
 .team-current-tasks{
     height: 50vh;
     width: 25vw;
     padding: 0px 20px;
-    background-color: aquamarine;
+    background-color: rgb(199, 199, 199);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -147,8 +152,8 @@ th ,td{
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 30vw;
-    background-color:darksalmon;
+    width: 26vw;
+    background-color:rgb(255, 220, 177);
     padding: 10px;
     border-radius: 20px;
     transition: all 0.5s;
@@ -160,7 +165,7 @@ th ,td{
     padding: 10px;
     font-size: 15px;
     border-radius: 15px;
-    background-color: brown;
+    background-color: rgb(255, 119, 60);
     color:white
 }
 .project-button:hover{
@@ -169,11 +174,21 @@ th ,td{
 
 .member-component{
     display: flex;
-    background-color: cornflowerblue;
+    background-color: rgb(237, 182, 100);
     width: 50VW;
     justify-content: space-around;
     align-items: center;
-    border-radius: 20px;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    color:white
 
+}
+h1{
+    font-size: 35px;
+}
+h2{
+    font-weight: normal;
+}
+.email-thingy{
+    color:gray
 }
