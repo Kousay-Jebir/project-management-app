@@ -60,11 +60,10 @@
 .team-leader-component{
     width:80%;
     background-color: rgb(255, 254, 208);
-    height:10vh;
     border-radius: 20px;
     font-size: 25px;
     text-align: center;
-    padding-top: 10px;
+    padding: 10px;
 }
 .main-departement{
     background-color: rgb(255, 255, 255);
@@ -118,9 +117,9 @@
     padding: 20px;
 }
 .team-current-tasks{
-    height: 50vh;
+    
     width: 25vw;
-    padding: 0px 20px;
+    padding: 10px 20px;
     background-color: rgb(199, 199, 199);
     border-radius: 20px;
     display: flex;
